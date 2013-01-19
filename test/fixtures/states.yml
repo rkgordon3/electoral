@@ -1,0 +1,26 @@
+# == Schema Information
+#
+# Table name: states
+#
+#  id              :integer         not null, primary key
+#  name            :string(255)
+#  abbrev          :string(255)
+#  electoral_votes :integer
+#  population      :integer
+#  created_at      :datetime        not null
+#  updated_at      :datetime        not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  abbrev: MyString
+  electoral_votes: 1
+  population: 1
+
+two:
+  name: MyString
+  abbrev: MyString
+  electoral_votes: 1
+  population: 1

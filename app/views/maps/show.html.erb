@@ -1,0 +1,68 @@
+  <div id="us-map" style="width: 600px; height: 400px"></div>
+  <script>
+    //$(function(){
+    //  $('#us-map').vectorMap({map: 'us_aea_en'});
+    //});
+
+  $(function(){
+  $.getJSON('/maps/show', function(data){
+    var year = 2008;
+        statesValues = jvm.values.apply({}, jvm.values(data.states)),
+        metroPopValues = Array.prototype.concat.apply([], jvm.values(data.metro.population)),
+        metroUnemplValues = Array.prototype.concat.apply([], jvm.values(data.metro.unemployment));
+       
+
+    $('#us-map').vectorMap({
+      map: 'us_aea_en',
+      
+      series: {
+       
+        regions: [{
+          scale: ['#DEEBF7', '#08519C'],
+          attribute: 'fill',
+          values: data.states[year],
+          min: jvm.min(statesValues),
+          max: jvm.max(statesValues)
+        }]
+      },
+      onMarkerLabelShow: function(event, label, index){
+        label.html(
+          ''+data.metro.names[index]+'<br/>'+
+          'Population: '+data.metro.population[year][index]+'<br/>'+
+          'Unemployment rate: '+data.metro.unemployment[year][index]
+        );
+      },
+      onRegionLabelShow: function(event, label, state_code){
+        vps = data.voting_profiles[state_code];
+        str = "";
+
+       for (i = 0; i  < vps.length; i++) {
+         str += vps[i].name + "  " + vps[i].votes + "<br/>";
+       }
+       
+        label.html(
+          ''+label.html()+'<br/>'+
+          'Electoral Votes: '+data.electoral_votes[state_code] + "<br/>" 
+           + str
+        );
+      }
+    });
+
+    var mapObject = $('#us-map').vectorMap('get', 'mapObject');
+
+    $("#slider").slider({
+      value: year,
+      min: 2005,
+      max: 2009,
+      step: 1,
+      slide: function( event, ui ) {
+        year = ui.value;
+        mapObject.series.regions[0].setValues(data.states[ui.value]);
+        mapObject.series.markers[0].setValues(data.metro.unemployment[ui.value]);
+        mapObject.series.markers[1].setValues(data.metro.population[ui.value]);
+      }
+    });
+  });
+});
+
+    </script>

@@ -1,0 +1,23 @@
+# == Schema Information
+#
+# Table name: voting_profiles
+#
+#  id           :integer         not null, primary key
+#  state_id     :integer
+#  candidate_id :integer
+#  votes        :integer
+#  created_at   :datetime        not null
+#  updated_at   :datetime        not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  state_id: 1
+  candidate_id: 1
+  votes: 1
+
+two:
+  state_id: 1
+  candidate_id: 1
+  votes: 1
