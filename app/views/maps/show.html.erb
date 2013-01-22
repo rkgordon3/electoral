@@ -5,8 +5,9 @@
     //});
 
   $(function(){
-  $.getJSON('/maps/show', function(data){
-    var year = 2008;
+  $.getJSON(<%= "\'#{maps_show_path}\'" %>, 
+    function(data){
+      var year = 2008;
         statesValues = jvm.values.apply({}, jvm.values(data.states)),
         metroPopValues = Array.prototype.concat.apply([], jvm.values(data.metro.population)),
         metroUnemplValues = Array.prototype.concat.apply([], jvm.values(data.metro.unemployment));
@@ -37,7 +38,7 @@
         str = "";
 
        for (i = 0; i  < vps.length; i++) {
-         str += vps[i].name + "  " + vps[i].votes + "<br/>";
+         str += vps[i].name + ": " + vps[i].votes + "<br/>";
        }
        
         label.html(
