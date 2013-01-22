@@ -10,7 +10,7 @@
 #
 
 class Candidate < ActiveRecord::Base
-  attr_accessible :name, :party_id
+  attr_accessible :name, :party_id, :party
   belongs_to :party
   has_many :voting_profiles
 end
