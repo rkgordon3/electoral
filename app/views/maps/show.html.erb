@@ -1,5 +1,24 @@
+ <div class="center hero-unit" >
+  <%= image_tag("whitehouse.jpg", :size=>"90x145") %>
   <div id="us-map" style="width: 600px; height: 400px"></div>
+  <div id="jCalTarget" ></div>
+</div>
+
+
   <script>
+$('#jCalTarget').jCal({
+	day:			new Date(2008, 8,1),
+	days:			1,
+	showMonths:		3,
+	monthSelect:		false,
+  scrollable:          false, 
+	callback:		function (day, days) {
+		// This is selected element, that is, a 'day' div 
+			elem =$("#c" +$('.jCalMo').length + "d_" + (day.getMonth()+1) + "_" + day.getDate() + "_"+day.getFullYear());
+		}
+	});
+
+
     //$(function(){
     //  $('#us-map').vectorMap({map: 'us_aea_en'});
     //});
@@ -15,7 +34,7 @@
 
     $('#us-map').vectorMap({
       map: 'us_aea_en',
-      
+      backgroundColor: '#707070',
       series: {
        
         regions: [{
@@ -50,7 +69,7 @@
     });
 
     var mapObject = $('#us-map').vectorMap('get', 'mapObject');
-
+    /*
     $("#slider").slider({
       value: year,
       min: 2005,
@@ -63,7 +82,22 @@
         mapObject.series.markers[1].setValues(data.metro.population[ui.value]);
       }
     });
+
+    */
+    $(function() {
+        $.getJSON(<%= "\'#{events_path}\'" %>, 
+            function(data) { 
+             
+              for (i = 0; i < data.length; i++) {
+                dateId = '#c3d_' + data[i].month + '_' + data[i].date + '_' + data[i].year;
+                //alert($(dateId));
+                $(dateId).addClass('eventDate'); 
+              }
+        });
+      });
+   
   });
 });
+
 
     </script>

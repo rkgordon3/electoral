@@ -17,7 +17,7 @@
   </div>
   <div class="field">
     <%= f.label :party %>
-    <%= collection_select(:candidate, :party_id, Party.all, :id, :name) %>
+    <%= party_select %>
   </div>
   <div class="actions">
     <%= f.submit %>
