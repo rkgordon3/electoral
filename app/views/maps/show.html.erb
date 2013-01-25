@@ -1,22 +1,76 @@
  <div class="center hero-unit" >
 
-<div class='span14' >
-  <div class="row-fluid">
-    <div id="us-map" class='span10' style="width:600px;height: 400px"></div>
-    <div class='span4' id="jCalTarget" ></div>
-  </div>
-  <div>
-     <%= vote_table(Candidate.all) %>
+<div class='span12' >
+  <div class="row">
+    <div class='span3' id="jCalTarget" ></div>
+    <div  class='span9' >
+      <div class='row'>
+        <div id="us-map" class='span8' style="width:600px;height: 400px"></div>
+        <div class='span1' style="position:relative; top:330px;left:-250px">
+          <i class='icon-retweet' onclick="recolor(this);" ></i>
+          <span style="font-size:8px"  id='popular_vote_scheme'>Color by Popular Vote</span>
+          <span style="font-size:8px"  id='electoral_vote_scheme' >Color by Electoral Vote</span>
+        </div>
+      </div>
+      <div class='row'>
+        <div class='span7' >
+          <%= vote_table(Candidate.all) %>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
 
 
   <script>
+
+   var colorScheme = '#electoral_vote_scheme';
+  function recolor(element) {
+  
+
+    $.getJSON(<%= "\'#{maps_show_path}\'" %>, 
+
+  
+
+  function (data){
+      var mapObject = $('#us-map').vectorMap('get', 'mapObject');
+      $(colorScheme).show();
+      if (colorScheme == '#electoral_vote_scheme' ) {
+       // toggle to popular
+      red_states = jvm.values.apply({}, jvm.values(data.percent_differential.red_states));
+      blue_states = jvm.values.apply({}, jvm.values(data.percent_differential.blue_states));
+
+       
+  
+        mapObject.series.regions[0].setScale(['#000000', '#ff0000']);
+        mapObject.series.regions[0].setValues(data.percent_differential.red_states);
+         mapObject.series.regions[1].setScale(['#000000', '#000000']);
+        mapObject.series.regions[1].setValues(data.percent_differential.blue_states);
+       
+        colorScheme = '#popular_vote_scheme';
+      } else {
+         mapObject.series.regions[0].setScale(['#DEEBF7', '#08519C']);
+        mapObject.series.regions[0].setValues(data.electoral_votes);
+        mapObject.series.regions[1].setValues([]);
+        colorScheme = '#electoral_vote_scheme';
+      }
+      $(colorScheme).hide();
+
+
+    });
+  
+   
+    //var mapObject = $('#us-map').vectorMap('get', 'mapObject');
+    //alert('recolor');
+
+
+  };
+
 $('#jCalTarget').jCal({
 	day:			new Date(<%= election_year %>, 8,1),
 	days:			1,
-	showMonths:		3,
+	showMonths:		<%= election_cycle %>,
 	monthSelect:		false,
   scrollable:          false, 
 	callback:		function (day, days) {
@@ -34,7 +88,9 @@ $('#jCalTarget').jCal({
   $.getJSON(<%= "\'#{maps_show_path}\'" %>, 
     function(data){
       var year = 2008;
-        statesValues = jvm.values.apply({}, jvm.values(data.states)),
+        $('#electoral_vote_scheme').hide()
+
+        statesValues = jvm.values.apply({}, jvm.values(data.electoral_votes)),
         metroPopValues = Array.prototype.concat.apply([], jvm.values(data.metro.population)),
         metroUnemplValues = Array.prototype.concat.apply([], jvm.values(data.metro.unemployment));
        
@@ -47,7 +103,14 @@ $('#jCalTarget').jCal({
         regions: [{
           scale: ['#DEEBF7', '#08519C'],
           attribute: 'fill',
-          values: data.states[year],
+          values: data.electoral_votes,
+          min: jvm.min(statesValues),
+          max: jvm.max(statesValues)
+        },
+        {
+          scale: ['#DEEBF7', '#08519C'],
+          attribute: 'fill',
+          values: [],
           min: jvm.min(statesValues),
           max: jvm.max(statesValues)
         }]

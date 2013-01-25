@@ -17,16 +17,28 @@ class State < ActiveRecord::Base
   attr_accessible :abbrev, :electoral_votes, :name, :population
   has_many :voting_profiles
 
+  def state_tag
+  	"US-" + abbrev
+  end
+  
   def winner
-	max = -1
-	candidate = nil
-	voting_profiles.each { |v|
-		if (v.votes > max) then
-			max = v.votes
- 			candidate = v.candidate
- 		end
- 	}
- 	candidate
+	(voting_profiles.reverse)[0].candidate
+  end
+
+  def projected_votes
+  	voting_profiles.collect { |v| v.votes}.sum
+  end
+
+  def profile(candidate) 
+  	(voting_profiles.select { |v| v.candidate == candidate })[0]
+  end
+
+  def differential(candidate)
+  	vps = voting_profiles.reverse
+  	isCandidateWinner = candidate == vps[0].candidate
+  	p1 =  isCandidateWinner ? vps[0] : profile(candidate)
+  	p2 =  isCandidateWinner ? vps[1] :  vps[0]
+  	diff = (p1.votes - p2.votes).to_f / projected_votes * 100
   end
 
 end

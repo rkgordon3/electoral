@@ -19,4 +19,8 @@ class VotingProfile < ActiveRecord::Base
   	self.votes + vp.votes
   end
 
+  def <=>(vp)
+  	self.votes <=> vp.votes
+  end
+
 end
