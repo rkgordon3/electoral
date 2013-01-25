@@ -5,13 +5,16 @@
     <div id="us-map" class='span10' style="width:600px;height: 400px"></div>
     <div class='span4' id="jCalTarget" ></div>
   </div>
+  <div>
+     <%= vote_table(Candidate.all) %>
+  </div>
 </div>
 
 
 
   <script>
 $('#jCalTarget').jCal({
-	day:			new Date(2008, 8,1),
+	day:			new Date(<%= election_year %>, 8,1),
 	days:			1,
 	showMonths:		3,
 	monthSelect:		false,

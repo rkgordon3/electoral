@@ -16,4 +16,17 @@ class State < ActiveRecord::Base
   validates :abbrev, length: { :maximum => 2, :minimum => 2 }
   attr_accessible :abbrev, :electoral_votes, :name, :population
   has_many :voting_profiles
+
+  def winner
+	max = -1
+	candidate = nil
+	voting_profiles.each { |v|
+		if (v.votes > max) then
+			max = v.votes
+ 			candidate = v.candidate
+ 		end
+ 	}
+ 	candidate
+  end
+
 end

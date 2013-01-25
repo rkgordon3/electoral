@@ -17,4 +17,8 @@ module MapsHelper
 		end
 		profiles.to_json.html_safe
 	end
+
+	def election_year
+        "2008"
+    end
 end
