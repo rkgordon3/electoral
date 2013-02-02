@@ -1,9 +1,14 @@
 Map::Application.routes.draw do
+
   resources :events
 
   resources :candidates
 
   get "maps/show"
+
+  resources :game_sessions do
+    post "roll" 
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

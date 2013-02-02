@@ -10,6 +10,7 @@
 #
 
 class Candidate < ActiveRecord::Base
+  include Player
   attr_accessible :name, :party_id, :party
   belongs_to :party
   has_many :voting_profiles

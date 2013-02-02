@@ -26,8 +26,11 @@ candidates = [bush, gore]
 
 # Keep track of swing states so I don't create default 
 # profile on initialization
-swing_states = ["AR", "FL", "IA", "MI", "MO", "NV", 
-	            "NH", "NM", "OR", "PA", "TN", "WV", "WI"]
+swing_states = ["AR", "AZ", "FL", "IA", "MI", "MO", "NV", 
+	            "NH", "NM", "OR", "PA", "TN", "UT", "WV", "WI"]
+
+
+
 
 
 states = 
@@ -36,19 +39,19 @@ states =
 # When defining profile for non-swing states, I am making up
 # data for now. I flipped values on alternate states, giving
 # each candidate popular vote victory in 50% of non-swing states
-arbitrary_vote_assignments = [400000, 500000]
-
+arbitrary_vote_assignments = [400000, 500000, 600000]
+i = 0
 StringIO.new(states).each_line do |ln|
   fields = ln.scan(/[(\w+) ]+/)
   puts "#{fields[1]}+#{fields[2]}+#{fields[3]}"
   s = State.create!(:name=>fields[1], 
                 :abbrev=>fields[2], 
                 :electoral_votes => fields[3].to_i)
-  i = 0
+  
   candidates.each do |c| 
   	VotingProfile.create!(:candidate=> c, 
   		                  :state=> s, 
-  		                  :votes => arbitrary_vote_assignments[i % 2])
+  		                  :votes => arbitrary_vote_assignments[i % 3])
     i += 1
   end unless swing_states.include?(s.abbrev)
 end
@@ -58,6 +61,9 @@ Event.create!(:name=>"Rally", :location=>State.find_by_abbrev("AL"), :date=>Date
 Event.create!(:name=>"Debate", :location=>State.find_by_abbrev("FL"), :date=>Date.new(2008, 10, 20))
 
 # Initialize swing states with non-default profile
+VotingProfile.create!(:candidate=>gore, 
+	                  :state=>State.find_by_abbrev("AZ"), 
+	                  :votes=>250000)
 VotingProfile.create!(:candidate=>gore, 
 	                  :state=>State.find_by_abbrev("AR"), 
 	                  :votes=>418000)
@@ -75,7 +81,7 @@ VotingProfile.create!(:candidate=>gore,
 	                  :votes=>1110000)
 VotingProfile.create!(:candidate=>gore, 
 	                  :state=>State.find_by_abbrev("NV"), 
-	                  :votes=>279000)
+	                  :votes=>299000)
 VotingProfile.create!(:candidate=>gore, 
 	                  :state=>State.find_by_abbrev("NH"), 
 	                  :votes=>245000)
@@ -92,6 +98,9 @@ VotingProfile.create!(:candidate=>gore,
 	                  :state=>State.find_by_abbrev("TN"), 
 	                  :votes=>980000)
 VotingProfile.create!(:candidate=>gore, 
+	                  :state=>State.find_by_abbrev("UT"), 
+	                  :votes=>200000)
+VotingProfile.create!(:candidate=>gore, 
 	                  :state=>State.find_by_abbrev("WV"), 
 	                  :votes=>291000)
 VotingProfile.create!(:candidate=>gore, 
@@ -101,6 +110,9 @@ VotingProfile.create!(:candidate=>gore,
 VotingProfile.create!(:candidate=>bush, 
 	                  :state=>State.find_by_abbrev("AR"), 
 	                  :votes=>470000)
+VotingProfile.create!(:candidate=>bush, 
+	                  :state=>State.find_by_abbrev("AZ"), 
+	                  :votes=>300000)
 VotingProfile.create!(:candidate=>bush, 
 	                  :state=>State.find_by_abbrev("FL"), 
 	                  :votes=>2900000)
@@ -131,6 +143,9 @@ VotingProfile.create!(:candidate=>bush,
 VotingProfile.create!(:candidate=>bush, 
 	                  :state=>State.find_by_abbrev("TN"), 
 	                  :votes=>1060000)
+VotingProfile.create!(:candidate=>bush, 
+	                  :state=>State.find_by_abbrev("UT"), 
+	                  :votes=>300000)
 VotingProfile.create!(:candidate=>bush, 
 	                  :state=>State.find_by_abbrev("WV"), 
 	                  :votes=>332000)

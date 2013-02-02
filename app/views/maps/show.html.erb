@@ -1,4 +1,4 @@
- <div class="center hero-unit" >
+<div class="center hero-unit" >
 
 <div class='span12' >
   <div class="row">
@@ -12,10 +12,16 @@
           <span style="font-size:8px"  id='electoral_vote_scheme' >Color by Electoral Vote</span>
         </div>
       </div>
+      
       <div class='row'>
-        <div class='span7' >
-          <%= vote_table(Candidate.all) %>
+        <div class='span6' >
+          <%= vote_table_tag(session[:game], Candidate.all) %>
         </div>
+      </div>
+      <div class='row'>
+         <div class="span1">
+           <%= roll_tag(session[:game]) %>
+         </div>
       </div>
     </div>
   </div>
@@ -24,16 +30,7 @@
 
 
   <script>
-
-   var colorScheme = '#electoral_vote_scheme';
-  function recolor(element) {
-  
-
-    $.getJSON(<%= "\'#{maps_show_path}\'" %>, 
-
-  
-
-  function (data){
+   function recolor_handler(data){
       var mapObject = $('#us-map').vectorMap('get', 'mapObject');
       $(colorScheme).show();
       if (colorScheme == '#electoral_vote_scheme' ) {
@@ -43,9 +40,10 @@
 
        
   
-        mapObject.series.regions[0].setScale(['#000000', '#ff0000']);
+        mapObject.series.regions[0].setScale(['#f4e6e6', '#f72a2a']);
         mapObject.series.regions[0].setValues(data.percent_differential.red_states);
-         mapObject.series.regions[1].setScale(['#000000', '#000000']);
+         mapObject.series.regions[1].setScale(
+          ['#DEEBF7', '#08519C']);
         mapObject.series.regions[1].setValues(data.percent_differential.blue_states);
        
         colorScheme = '#popular_vote_scheme';
@@ -58,12 +56,12 @@
       $(colorScheme).hide();
 
 
-    });
-  
-   
-    //var mapObject = $('#us-map').vectorMap('get', 'mapObject');
-    //alert('recolor');
+    };
 
+   var colorScheme = '#electoral_vote_scheme';
+  function recolor(element) { 
+
+    $.getJSON(<%= "\'#{maps_show_path}\'" %>, recolor_handler);
 
   };
 
@@ -168,6 +166,8 @@ $('#jCalTarget').jCal({
    
   });
 });
+
+
 
 
     </script>

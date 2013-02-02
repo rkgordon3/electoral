@@ -23,4 +23,5 @@ class VotingProfile < ActiveRecord::Base
   	self.votes <=> vp.votes
   end
 
+
 end

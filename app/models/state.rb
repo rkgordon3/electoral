@@ -22,7 +22,7 @@ class State < ActiveRecord::Base
   end
   
   def winner
-	(voting_profiles.reverse)[0].candidate
+	(voting_profiles.sort.reverse)[0].candidate
   end
 
   def projected_votes
@@ -40,5 +40,16 @@ class State < ActiveRecord::Base
   	p2 =  isCandidateWinner ? vps[1] :  vps[0]
   	diff = (p1.votes - p2.votes).to_f / projected_votes * 100
   end
+
+  def self.margin_map(candidate)
+  	map = {}
+  	State.all.select { |s| s.winner == candidate }.each { |s| 
+		diff = s.differential(candidate)
+		puts "diff  #{diff.to_s} in  #{s.abbrev}"
+		map[ s.state_tag] =  diff  if diff > 0 
+	}
+	map
+   end
+
 
 end
