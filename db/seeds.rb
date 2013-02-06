@@ -19,8 +19,8 @@ Event.destroy_all
 rep = Party.create!(:name => "Republican")
 dem = Party.create!(:name => "Democratic")
 
-bush = Candidate.create!(:name=>"Bush", :party=>rep)
-gore = Candidate.create!(:name=>"Gore", :party=>dem)
+bush = Candidate.create!(:name=>"Bush", :party=>rep, :image=> "icon-star")
+gore = Candidate.create!(:name=>"Gore", :party=>dem, :image=> "icon-glass")
 
 candidates = [bush, gore]
 
