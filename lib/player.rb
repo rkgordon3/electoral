@@ -1,7 +1,6 @@
 module Player
+	attr_accessor :image
 
-    def image
-    end
     def location
     	5
     end

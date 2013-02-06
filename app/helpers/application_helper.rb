@@ -8,7 +8,11 @@ module ApplicationHelper
 			$("#die0_label").html(val0);
   			val1 = Math.floor((Math.random()*6)+1);
   			$("#die1_label").html(val1);
-  			$.post("/#{param_hash[:controller]}/1/#{param_hash[:action]}", { 'die[]' : [val0, val1] }, function(data) { alert(data.name); $('#player_in_turn').html(data.name)}, "json");
+  			$.post("/#{param_hash[:controller]}/1/#{param_hash[:action]}", 
+  				       { 'die[]' : [val0, val1] }, 
+  				       function(data) { 
+                  $("#player_in_turn").html(data.player_in_turn);
+                  handle_move(data); }, "json");
 		};])
          		
 		out += %Q[<table class='table table-bordered table-condensed'>\

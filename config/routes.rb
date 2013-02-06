@@ -8,7 +8,12 @@ Map::Application.routes.draw do
 
   resources :game_sessions do
     post "roll" 
+    get "reset"
+    get "players"
   end
+
+
+  
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

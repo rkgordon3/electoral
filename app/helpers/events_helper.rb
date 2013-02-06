@@ -4,11 +4,12 @@ module EventsHelper
 	end
 
 	def json_events
-		puts "++++++++++++++++++++++++++++++++ json_events"
-		events = []
+		setup = {}
+		events_array = []
 		Event.all.each do |e| 
-			events << { :name => e.name, :month => e.date.month, :date => e.date.day, :year => e.date.year }
+			events_array << { :name => e.name, :month => e.date.month, :date => e.date.day, :year => e.date.year }
 		end
-		events.to_json.html_safe
+		setup[:events] = events_array
+		setup.to_json.html_safe
 	end
 end

@@ -6,12 +6,11 @@ class ApplicationController < ActionController::Base
 
   	def set_game
   		begin
-  			game = GameBase::Game.new
+  			game = ElectoralGame.new(Date.new(2008, 9, 1))
   			game.add_player(Candidate.find_by_name("Gore"))
     		game.add_player(Candidate.find_by_name("Bush"))
     		session[:game] = game
-        logger.debug("%%%%%%%%%%% app controller #{game.inspect}")
-        session[:game_session] = GameSession.new(game)
 		  end if session[:game].nil?
+      session[:game]
   	end
 end

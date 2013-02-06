@@ -1,4 +1,6 @@
 class GameSession < ActiveRecord::Base
-  attr_accessible :game_id
+	include GameBase
+  attr_accessible :game_id, :game
   belongs_to :game
+
 end

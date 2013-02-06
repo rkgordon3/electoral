@@ -34,7 +34,7 @@ module GameBase
     end
 
     def move(player, squares) 
-      loc = remove_player_from_board(player)
+      loc = remove(player)
       begin
         square = squares + loc[0]
         place(player, square)

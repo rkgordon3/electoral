@@ -26,8 +26,16 @@ module MapsHelper
 		percent_diff_map.to_json.html_safe
 	end
 
-	def election_year
-        "2008"
+	def election_year(game)
+        game.election_year
+    end
+
+    def campaign_start_date(game)
+    	game.campaign_start_date
+    end
+
+    def campaign_start_month(game)
+    	game.campaign_start_month
     end
 
     def election_cycle

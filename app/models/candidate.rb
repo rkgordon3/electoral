@@ -10,11 +10,18 @@
 #
 
 class Candidate < ActiveRecord::Base
-  include Player
-  attr_accessible :name, :party_id, :party
+
+  attr_accessible :name, :party_id, :party, :image
+  attr_accessor :campaign_date
   belongs_to :party
   has_many :voting_profiles
+
   def electoral_votes
   	State.all.select { |s| s.winner==self}.collect { |s| s.electoral_votes }.sum
   end
+
+
+
+
+
 end
