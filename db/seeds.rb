@@ -57,8 +57,69 @@ StringIO.new(states).each_line do |ln|
 end
 
 # A couple dummy events, ie special calendar dates
-Event.create!(:name=>"Rally", :location=>State.find_by_abbrev("AL"), :date=>Date.new(2008, 9, 24))
-Event.create!(:name=>"Debate", :location=>State.find_by_abbrev("FL"), :date=>Date.new(2008, 10, 20))
+e = Event.create!(:name=>"Rally",
+		    :event_type => 'debate',
+			:location=>State.find_by_abbrev("AL"), 
+			:date=>Date.new(2008, 9, 2),
+			:description => %Q[A campaign finance reform interest...])
+Outcome.create!(:candidate => bush, :delta => 1, :event => e)
+Outcome.create!(:candidate => gore, :delta => 1, :event => e)
+e = Event.create!(:name=>"Debate", 
+			:event_type => 'debate',
+			:location=>State.find_by_abbrev("FL"), 
+			:date=>Date.new(2008, 9, 3),
+			:description => %Q[A terrible storm hits Texas...])
+Outcome.create!(:candidate => bush, :delta => 1, :event => e)
+Outcome.create!(:candidate => gore, :delta => 1, :event => e)
+e = Event.create!(:name=>"Debate", 
+			:event_type => 'debate',
+			:location=>State.find_by_abbrev("FL"), 
+			:date=>Date.new(2008, 9, 4),
+			:description => %Q[The Independent Counsel releases...])
+Outcome.create!(:candidate => bush, :delta => 1, :event => e)
+Outcome.create!(:candidate => gore, :delta => 1, :event => e)
+e = Event.create!(:name=>"Debate", 
+			:event_type => 'debate',
+			:location=>State.find_by_abbrev("FL"), 
+			:date=>Date.new(2008, 9, 5),
+			:description => %Q[OPEC nations agree...])
+Outcome.create!(:candidate => bush, :delta => 1, :event => e)
+Outcome.create!(:candidate => gore, :delta => 1, :event => e)
+e = Event.create!(:name=>"Debate", 
+			:event_type => 'debate',
+			:location=>State.find_by_abbrev("FL"), 
+			:date=>Date.new(2008, 9, 6),
+			:description => %Q[Green Party Candidate...])
+Outcome.create!(:candidate => bush, :delta => 1, :event => e)
+Outcome.create!(:candidate => gore, :delta => 1, :event => e)
+e=Event.create!(:name=>"Debate", 
+			:event_type => 'debate',
+			:location=>State.find_by_abbrev("FL"), 
+			:date=>Date.new(2008, 9, 7),
+			:description => %Q[Dogs bark at the moon...])
+Outcome.create!(:candidate => bush, :delta => 1, :event => e)
+Outcome.create!(:candidate => gore, :delta => 1, :event => e)
+e = Event.create!(:name=>"Debate", 
+			:event_type => 'debate',
+			:location=>State.find_by_abbrev("FL"), 
+			:date=>Date.new(2008, 9, 8),
+			:description => %Q[The Cardinals win the World Series...])
+Outcome.create!(:candidate => bush, :delta => 1, :event => e)
+Outcome.create!(:candidate => gore, :delta => 1, :event => e)
+e = Event.create!(:name=>"Debate", 
+			:event_type => 'debate',
+			:location=>State.find_by_abbrev("FL"), 
+			:date=>Date.new(2008, 9, 9),
+			:description => %Q[Bay Buchanan opens her mouth...])
+Outcome.create!(:candidate => gore, :delta => 1, :event => e)
+Outcome.create!(:candidate => bush, :delta => 1, :event => e)
+e = Event.create!(:name=>"Debate", 
+			:event_type => 'debate',
+			:location=>State.find_by_abbrev("FL"), 
+			:date=>Date.new(2008, 9, 10),
+			:description => %Q[Ronald Reagans comes back from the dead...])
+Outcome.create!(:candidate => bush, :delta => 1, :event => e)
+Outcome.create!(:candidate => gore, :delta => 1, :event => e)
 
 # Initialize swing states with non-default profile
 VotingProfile.create!(:candidate=>gore, 

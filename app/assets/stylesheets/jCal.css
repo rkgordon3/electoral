@@ -122,8 +122,16 @@
 	/* must use rgb() syntax for jquery.color.js compliance */
 	background:rgb(0, 102, 153);
 }
+
 .jCalMo .eventDate {
-	background:rgb(100, 102,0);
+		background-color:hsl(225, 30%, 60%);
+}
+.jCalMo  .event .debate {
+	background-color:hsl(225, 30%, 60%);
+}
+
+.jCalMo .event .stumpSpeech {
+	background-color:hsl(180, 30%, 60%);
 }
 
 /* left month navigation button - no need to change */
