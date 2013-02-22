@@ -123,11 +123,11 @@
 	background:rgb(0, 102, 153);
 }
 
-.jCalMo .eventDate {
+.jCalMo .debate {
 		background-color:hsl(225, 30%, 60%);
 }
-.jCalMo  .event .debate {
-	background-color:hsl(225, 30%, 60%);
+.jCalMo  .event  {
+	background-color:hsl(180, 30%, 60%);
 }
 
 .jCalMo .event .stumpSpeech {

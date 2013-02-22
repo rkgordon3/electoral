@@ -98,7 +98,16 @@ $('#jCalTarget').jCal({
 		}
 	});
 
+  function close_popover(elem) {
+  
+    s = elem.id;
+    alert(s);
+    alert($(s).text());
+    pop_day_id = s.substring(0,s.length-1);
 
+    $(pop_day_id).popover('hide');
+      
+  }
 
 
     //$(function(){
@@ -161,6 +170,8 @@ $('#jCalTarget').jCal({
 
     var mapObject = $('#us-map').vectorMap('get', 'mapObject');
 
+
+
     $(function() {
         $.getJSON(<%= "\'#{events_path}\'" %>, 
             function(data) { 
@@ -180,14 +191,18 @@ $('#jCalTarget').jCal({
                 */
                
                 /* html = '<span>' + events[i].description  + '</span><br/>Outcomes:<br/>' + outtable; */
+                bid = dateId+'b';
              
                 $(dateId).popover({ html:true,
-                                    placement:'bottom',
-                                    title: events[i].name,
-                                    content: "<span>"+events[i].description + "</span><br/>" +
-                                           "Bush:+1<br/>Gore:-1" });
+                                placement:'bottom',
+                                trigger: 'manual',
+                                title: events[i].name,
+                                content: "<span>"+events[i].description 
+                                  + "</span><br/>" 
+                                  + "Bush:+1<br/>Gore:-1<br/>" 
+                                  + "<button id='" + bid + "' class='btn btn-success btn-mini' type='button' onclick='close_popover(this);'>Ok</button>" });
     
-                $(dateId).addClass('eventDate');
+                $(dateId).addClass(events[i].type);
               }
         });
       });
