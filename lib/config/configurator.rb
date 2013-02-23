@@ -23,9 +23,7 @@ def describe event, &blk
    Configuration.instance.add_event event
 end
 
-def responds(outcomes)
-  outcomes
-end
+
 
 begin
 
@@ -58,7 +56,7 @@ end
 
 describe policy "Should we expand our oil drilling, including coastal waters and in National Wildlife Refuge in Alaska?" do
    date "11/12/20"
-   Gore responds yes outcome +1, [MI, MO]
+   Gore response yes outcome +1, [MI, MO]
   # Gore responds no  outcome -1, [MI, MO] 
    #responds yes  outcome +1, [MN, IL] 
 end

@@ -1,3 +1,5 @@
+require 'candidates.rb'
+
 class Outcome
   def initialize(rule, demographics, trigger = nil)
     @rule = rule
@@ -21,9 +23,11 @@ class Event
   end
 
   def method_missing(name, *args, &blk)
-    p "mm for #{name}"
+    p "mm #{self.class}"
     @outcomes[name] = args[0][:candidate]
   end
+
+
   def candidate(name) 
     @candidate = name
   end
@@ -50,10 +54,20 @@ end
 
 
 class Policy < Event
+
+  def response(outcomes)
+    outcomes
+  end
   def method_missing(name, *args, &blk)
+    p "policy mm #input #{name} #{name.class}"
+    p "mm #{candidates} : #{candidates.include? name}"
     begin
-      return super.method_missing(name, *args, &blk)
-    end if candidates.include? name
+      p "policy mm #{name}"
+      p "self class #{self.class}"
+      p "super.class #{super.class}"
+      super.method_missing(name, args, blk)
+      return
+    end if candidates.include? name.is_a?(Symbol) ? name.to_s : name
     begin
       args[0].each_value { |v|
         v.each { |o| o.trigger = name.to_sym } 
