@@ -56,9 +56,10 @@ end
 
 describe policy "Should we expand our oil drilling, including coastal waters and in National Wildlife Refuge in Alaska?" do
    date "11/12/20"
-   Gore response yes outcome +1, [MI, MO]
-   Gore response no  outcome -1, [MI, MO], +3, [IL, MN] 
-   Bush response yes outcome +2, [AK] 
+   Gore responds yes outcome +1, [MI, MO]
+   Gore responds no  outcome -1, [MI, MO], +3, [IL, MN] 
+   Bush responds no outcome +1, [IA, WI]
+   responds yes outcome +2, [AK] 
 end
 end # Configurator.new
 =begin

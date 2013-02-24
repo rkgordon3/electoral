@@ -18,8 +18,37 @@ class Event
   end
 
   def method_missing(name, *args, &blk)
+ 
+    return unless candidates.include? name.is_a?(Symbol) ? name.to_s : name
+    p "event mm #{args[0].class}"
     csym = name.to_sym
-    @outcomes[csym] = @outcomes[csym].nil? ? args[0] : @outcomes[csym].merge!(args[0])
+    case 
+    when args[0].is_a?(Array)
+      #
+      # If arg[0] is an array, the array consists of
+      # non-triggered outcomes.
+      #
+      p "array of outcomes for #{csym}"
+      @outcomes[csym] = @outcomes[csym].nil? ? args[0] : @outcomes[csym].concat!(args[0])
+      return
+    when args[0].is_a?(Hash)
+      #
+      #  Triggered outcome appear in an hash, with a single key which is 
+      # the trigger.
+      #
+      p "hash of outcomes #{args[0]} for #{csym}"
+      if @outcomes[csym].nil?
+        @outcomes[csym] =  args[0] 
+      else
+        args[0].each_pair  do |k,v|
+          p "concating at #{k} values #{v} to #{@outcomes[csym]}"
+          @outcomes[csym].has_key?(k) ? @outcomes[csym][k].concat!(v) : @outcomes[csym][k] = v 
+        end 
+      end
+    else
+      puts 'illegal value to '
+    end
+      
   end
 
 
@@ -38,6 +67,9 @@ class Event
   def date(d)
     @date = d
   end
+  #
+  # Return an array of outcomes
+  #
   def outcome(*impacts, &blk)
     outcomes = []
     impacts.each_slice(2) { |rule, demographics| 
@@ -50,7 +82,9 @@ end
 
 class Policy < Event
 
-  def response(outcomes)
+  def responds(outcomes)
+    # update defaults
+    #@outcomes[:candidate] = @outcomes[:candidate].nil? ?  outcomes : @outcomes[:candidate].merge!(outcomes)
     outcomes
   end
   def method_missing(name, *args, &blk)
@@ -58,6 +92,9 @@ class Policy < Event
       return super
     end if candidates.include? name.is_a?(Symbol) ? name.to_s : name
     begin
+      #
+      # Place the outcomes under a trigger
+      #
       { name.to_sym => args[0] }
     end if is_outcome?(args[0])
   end
