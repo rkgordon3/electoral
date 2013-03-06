@@ -1,5 +1,7 @@
 Map::Application.routes.draw do
 
+  resources :elections
+
   resources :events
 
   resources :candidates

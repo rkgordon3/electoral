@@ -1,4 +1,4 @@
-require 'candidates.rb'
+require 'elections/pres2008/candidates.rb'
 
 class Outcome
   def initialize(rule, demographics)
@@ -53,6 +53,7 @@ class Policy < Event
   def response(outcomes)
     outcomes
   end
+
   def method_missing(name, *args, &blk)
     begin
       return super
