@@ -1,9 +1,8 @@
-election_root = "./elections/pres2008"
+require 'root.rb'
 
 require 'events.rb'
-require "#{election_root}/candidates.rb"
+require "#{Root::Election}/candidates.rb"
 require 'states.rb'
-require 'singleton.rb'
 require 'configuration.rb'
 
 
@@ -26,15 +25,13 @@ end
 
 begin
 
-  Configurator.new.instance_eval File.open("./elections/pres2008/campaign_events.rb").readlines.join(";")
-  puts Configuration.instance.events
-
+  Configurator.new.instance_eval File.open("#{Root::Election}/campaign_events.rb").readlines.join(";")
 
 rescue  Exception => e
   
   e.backtrace[0] =~ /[a-z]+\.rb:[0-9]+/
   begin
-    print e.message + " at iine " + $~[0]
+    print e.message + " at line " + $~[0]
     puts "...Probably a mistyped state abbreviation" if e.message.start_with?("uninitialized constant")
   end unless $~.nil?
 

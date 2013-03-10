@@ -1,7 +1,7 @@
-require 'event.rb'
+require 'event_descriptor.rb'
 module Events
 
 	%w(event policy).each { |m| 
-  		define_method(m.to_sym) { |caption| Object::const_get(m.capitalize).new(caption) }
+  		define_method(m.to_sym) { |caption| Object::const_get("#{m.capitalize}Descriptor").new(caption) }
 	}
 end

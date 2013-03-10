@@ -7,6 +7,7 @@
 #  created_at :datetime        not null
 #  updated_at :datetime        not null
 #  party_id   :integer
+#  image      :string(255)
 #
 
 class Candidate < ActiveRecord::Base
