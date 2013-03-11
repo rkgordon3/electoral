@@ -25,5 +25,10 @@ describe policy "Caption4" do
   date "11/12/20"
   Gore responds yes outcome +1, [MI, MO]
   Gore responds no outcome -1, [MI, MO]
-  #responds yes  outcome +1, [MN, IL] 
+end
+
+describe policy "Caption5" do
+  date "11/12/20"
+  Gore responds yes outcome +1, [MI, MO]
+  responds no outcome -1, [MI, MO]
 end

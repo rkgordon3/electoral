@@ -11,21 +11,20 @@ end
 class EventDescriptor
   include Candidates
   attr_reader :outcomes
+  attr_reader :pending
   attr_accessor :candidate
   attr_accessor :event_date
 
   def initialize(caption = nil) 
     @caption = caption
+    @pending = {}
     @outcomes = {}
     @candidate = :candidate
   end
 
   def method_missing(name, *args, &blk)
-    csym = name.to_sym
-    @outcomes[csym] = @outcomes[csym].nil? ? args[0] : @outcomes[csym].merge!(args[0])
-      
+    merge_outcomes(@outcomes, name, Marshal.load(Marshal.dump(args[0])))
   end
-
 
   def trigger(name) 
     @candidate = name
@@ -44,6 +43,9 @@ class EventDescriptor
   def date(d)
     @event_date = d
   end
+
+
+
   #
   # Return an array of outcomes
   #
@@ -54,12 +56,25 @@ class EventDescriptor
     }
     outcomes   
   end
+
+  protected
+
+  def merge_outcomes(hash, name, args) 
+    csym = name.to_sym
+    hash[csym] = hash[csym].nil? ? args : hash[csym].merge!(args)     
+  end
+
+  private
+  def complete
+    @outcomes.merge!(@pending)
+  end
 end
 
 
 class PolicyDescriptor < EventDescriptor
 
   def responds(outcomes)
+    merge_outcomes(@pending, :candidate, outcomes)
     outcomes
   end
   # 
@@ -75,7 +90,7 @@ class PolicyDescriptor < EventDescriptor
     #
     begin
       #
-      # Place the outcomes under a trigger
+      # Place the outcomes under a response trigger
       #
       { name.to_sym => args[0] }
     end if is_outcome?(args[0])

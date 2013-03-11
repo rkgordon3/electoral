@@ -6,16 +6,17 @@ include States
 
 describe 'Configuration' do
 
-before(:each) {
+before(:all) {
 	load 'lib/config/configurator.rb'
 	@events = Configuration.instance.events
 	@event1 = Configuration.instance.event_for_caption("Caption1")
 	@event2 = Configuration.instance.event_for_caption("Caption2")
 	@event3 = Configuration.instance.event_for_caption("Caption3")
 	@event4 = Configuration.instance.event_for_caption("Caption4")
+  @event5 = Configuration.instance.event_for_caption("Caption5")
 }
-  it 'should report four events' do
-    @events.length.should == 4
+  it 'should report five events' do
+    @events.length.should == 5
   end
 
   it "should contain proper captions" do
@@ -65,5 +66,12 @@ before(:each) {
     outcomes[:no].size == 1
     outcomes[:yes][0].rule.should == 1
     outcomes[:no][0].rule.should == -1
+  end
+
+  it "should report yes and no outcomes for Gore in Caption5" do
+    goutcomes = @event5.outcomes[:Gore]
+    goutcomes.should have_exactly(1).keys
+    coutcomes = @event5.outcomes[:candidate]
+    coutcomes.should have_exactly(2).keys
   end
 end

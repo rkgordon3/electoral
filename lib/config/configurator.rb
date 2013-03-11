@@ -16,8 +16,10 @@ include Candidates
 swing_states = [AL, AK, IL, NJ]
 
 
+
 def describe event, &blk
    event.instance_eval &blk
+   event.send "complete"
    Configuration.instance.add_event event
 end
 
