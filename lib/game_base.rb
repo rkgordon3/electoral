@@ -3,7 +3,7 @@ module GameBase
     include Board
     attr_accessor :players
 
-    def initialize
+    def initialize(name)
       @players = []
       @current_turn = 0
       # TODO

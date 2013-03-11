@@ -3,20 +3,23 @@ module EventsHelper
 		collection_select(:event, :location_id, State.all, :id, :name)
 	end
 
-	def json_events
+	def json_events(events)
 		setup = {}
 		events_array = []
-		Event.all.each do |e| 
+		events.each do |e| 
 			outcomes = []
+=begin
 			e.outcomes.each { |o| 
 				outcomes << { :candidate => o.candidate.name, :delta => o.delta }
 			}
-			events_array << { :name => e.name, 
-				              :month => e.date.month, 
-				              :date => e.date.day, 
-				              :year => e.date.year, 
-				              :type => e.event_type,
-				              :description => e.description,
+=end
+		    month, day, year = e.event_date.split("/")
+			events_array << { :name => e.caption, 
+				              :month => month, 
+				              :date => day, 
+				              :type => "debate",
+				              :year => year, 
+				              :description => e.event_description,
 				              :outcomes => outcomes  }
 		end
 		setup[:events] = events_array

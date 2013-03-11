@@ -1,5 +1,6 @@
 require 'elections/pres2008/candidates.rb'
 
+
 class OutcomeDescriptor
   attr_reader :rule, :demographics
   def initialize(rule, demographics)
@@ -14,6 +15,7 @@ class EventDescriptor
   attr_reader :pending
   attr_accessor :candidate
   attr_accessor :event_date
+  attr_reader :event_description
 
   def initialize(caption = nil) 
     @caption = caption
@@ -38,7 +40,7 @@ class EventDescriptor
     @caption
   end
   def description(d)
-    @description = d
+    @event_description = d
   end
   def date(d)
     @event_date = d
@@ -84,7 +86,7 @@ class PolicyDescriptor < EventDescriptor
     #
     begin
       return super
-    end if candidates.include? name.is_a?(Symbol) ? name.to_s : name
+    end if Candidates.candidates.include? name.is_a?(Symbol) ? name.to_s : name
     #
     #  else name is a response value
     #
@@ -103,4 +105,25 @@ class PolicyDescriptor < EventDescriptor
   end
 
 end
+
+class ElectionDescriptor 
+  attr_reader :caption, :event_date
+
+  def intialize(caption) 
+    @caption = caption
+  end
+
+  def caption
+    @caption
+  end
+
+
+  def date(d)
+    @event_date = d
+  end
+
+  def candidate
+  end
+end
+
   

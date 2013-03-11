@@ -7,20 +7,20 @@ include States
 describe 'Configuration' do
 
 before(:all) {
-	load 'lib/config/configurator.rb'
-	@events = Configuration.instance.events
-	@event1 = Configuration.instance.event_for_caption("Caption1")
-	@event2 = Configuration.instance.event_for_caption("Caption2")
-	@event3 = Configuration.instance.event_for_caption("Caption3")
-	@event4 = Configuration.instance.event_for_caption("Caption4")
-  @event5 = Configuration.instance.event_for_caption("Caption5")
+	#load 'lib/config/configurator.rb'
+	@config = Configurator.new("pres2008")
+	@event1 = @config.event_for_caption("Caption1")
+	@event2 = @config.event_for_caption("Caption2")
+	@event3 = @config.event_for_caption("Caption3")
+	@event4 = @config.event_for_caption("Caption4")
+  @event5 = @config.event_for_caption("Caption5")
 }
   it 'should report five events' do
-    @events.length.should == 5
+    @config.events.length.should == 5
   end
 
   it "should contain proper captions" do
-  	captions = @events.each.collect { |e| e.caption }
+  	captions = @config.events.each.collect { |e| e.caption }
   	captions.should include "Caption1"
   	captions.should include "Caption2"    
   end

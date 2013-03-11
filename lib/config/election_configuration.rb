@@ -1,6 +1,6 @@
 require 'singleton'
 
-class Configuration
+class ElectionConfiguration
   include Singleton
 
   attr_reader :events

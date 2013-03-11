@@ -1,8 +1,13 @@
 class ElectoralGame < GameBase::Game
 	attr_accessor :start_date
-	def initialize(start_date = Date.today)
-		super()
-		@start_date = start_date
+    attr_reader :configuration
+    #
+    # name designates configuration file
+    #
+	def initialize(name)
+		super
+        @configuration = Configurator.new(name)
+		@start_date = Date.new(2008, 9, 1)
 	end
 
     def campaign_date(player) 

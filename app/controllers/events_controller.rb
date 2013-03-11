@@ -1,13 +1,13 @@
 class EventsController < ApplicationController
+  respond_to :json, :html
   # GET /events
   # GET /events.json
   def index
-    @events = Event.all
+    #@events = Event.all
+    @events = session[:game].configuration.events
+    puts @events
+    respond_with(@events)
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json 
-    end
   end
 
   # GET /events/1

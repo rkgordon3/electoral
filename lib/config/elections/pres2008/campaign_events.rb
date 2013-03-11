@@ -1,3 +1,5 @@
+
+
 describe event "Caption1" do
    trigger Bush
    date "10/11/2008"
@@ -15,20 +17,20 @@ end
 
 describe event "Caption3" do
    description "A really, really big event"
-   date "12/31/2013"
+   date "9/30/2008"
    Bush outcome  +1, [AK, AL]
    Gore outcome  -1, [AK, AL] 
 end 
 
 
 describe policy "Caption4" do
-  date "11/12/20"
+  date "11/1/2008"
   Gore responds yes outcome +1, [MI, MO]
   Gore responds no outcome -1, [MI, MO]
 end
 
 describe policy "Caption5" do
-  date "11/12/20"
+  date "11/2/2008"
   Gore responds yes outcome +1, [MI, MO]
   responds no outcome -1, [MI, MO]
 end
