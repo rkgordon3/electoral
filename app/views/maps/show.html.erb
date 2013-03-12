@@ -101,8 +101,8 @@ $('#jCalTarget').jCal({
   function close_popover(elem) {
   
     s = elem.id;
-    alert(s);
-    alert($(s).text());
+    //alert(s);
+    //alert($(s).text());
     pop_day_id = s.substring(0,s.length-1);
 
     $(pop_day_id).popover('hide');
@@ -181,7 +181,6 @@ $('#jCalTarget').jCal({
                                                 events[i].date,
                                                 events[i].year);
                 outs  = events[i].outcomes;
-                alert("event " + events[i].name);
                 
                /*
                 outtable = "<table>";
@@ -196,7 +195,7 @@ $('#jCalTarget').jCal({
              
                 $(dateId).popover({ html:true,
                                 placement:'bottom',
-                                trigger: 'manual',
+                                trigger: 'click',
                                 title: events[i].name,
                                 content: "<span>"+events[i].description 
                                   + "</span><br/>" 
