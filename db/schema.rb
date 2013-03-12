@@ -11,14 +11,23 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130309204205) do
+ActiveRecord::Schema.define(:version => 20130312214206) do
 
   create_table "candidates", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
     t.integer  "party_id"
     t.string   "image"
+    t.integer  "election_id"
+  end
+
+  create_table "demographics", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.integer  "value_id"
+    t.integer  "outcome_id"
+    t.string   "type_of"
   end
 
   create_table "elections", :force => true do |t|
@@ -26,17 +35,20 @@ ActiveRecord::Schema.define(:version => 20130309204205) do
     t.integer  "game_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.date     "date"
   end
 
   create_table "events", :force => true do |t|
     t.datetime "date"
     t.string   "name"
     t.integer  "location_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
     t.string   "event_type"
     t.string   "description"
     t.string   "caption"
+    t.integer  "candidate_id"
+    t.integer  "election_id"
   end
 
   create_table "game_sessions", :force => true do |t|
@@ -51,6 +63,7 @@ ActiveRecord::Schema.define(:version => 20130309204205) do
     t.integer  "delta"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
+    t.string   "trigger"
   end
 
   create_table "parties", :force => true do |t|

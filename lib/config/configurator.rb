@@ -17,7 +17,9 @@ attr_reader :events
 
 swing_states = [AL, AK, IL, NJ]
 
-def initialize(name)
+def initialize(name, date)
+  @date = date.is_a?(String) ? date.to_date : date
+  @name = name
   @events = []
   @event_map = {}
   instance_eval File.open("./lib/config/elections/#{name}/campaign_events.rb").readlines.join(";")
@@ -41,6 +43,71 @@ end
 
 def candidates
   Candidates.candidates
+end
+
+def persist
+  parties = ["Republican", "Democratic"]
+  images = [ "icon-star", "icon-glass"]
+  i = 0
+  election = Election.create!(name: @name, date: @date)
+  Candidate.create!(name: "candidate", election: election)
+  candidates.each { |c|
+    mc = Candidate.create!(election: election, name: c, party_id: Party.find_by_name(parties[i % 2]).id, image: images[i%2])
+    election.candidates << mc
+    i += 1
+  }
+
+  @events.each { |e| 
+   
+    event = Event.create!(date: e.event_date, 
+                      name: e.caption,
+                      description: e.event_description,
+                      event_type: "debate",
+                      election_id: election.id,
+                      trigger_candidate: Candidate.find_by_name(e.candidate))
+    e.outcomes.each_key { |candy| 
+     
+      outcomes_for_candy = e.outcomes[candy]
+      candy_id = Candidate.find_by_name(candy.to_s).id
+      case outcomes_for_candy
+        
+      when Array
+        outcomes_for_candy.each do |oc|
+          outc = Outcome.create!(
+                          event_id: event.id,
+                          delta: oc.rule,
+                          candidate_id: candy_id)
+          oc.demographics.each do |s|
+            Demographic.create!(type_of: State.to_s, 
+                                 value_id: State.find_by_abbrev(s).id,
+                                 outcome_id: outc.id)
+          end
+        end
+        # no triggering response
+      when Hash
+        outcomes_for_candy.each_key do |response|
+          outcomes_for_response = outcomes_for_candy[response]
+          outcomes_for_response.each do |oc|
+            outc = Outcome.create!(
+                          event_id: event.id,
+                          delta: oc.rule,
+                          candidate_id: candy_id,
+                          trigger: response)
+      
+            oc.demographics.each do |s|
+              Demographic.create!(type_of: State.to_s, 
+                                 value_id: State.find_by_abbrev(s).id,
+                                 outcome_id: outc.id)
+            end
+          end    
+        end
+      else 
+      end
+    }
+    election.events << event
+  }
+  election.save
+
 end
 
 

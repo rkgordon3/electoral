@@ -1,10 +1,10 @@
 Map::Application.routes.draw do
 
-  resources :elections
+  resources :elections do
+    resources :events
+    resources :candidates
+  end
 
-  resources :events
-
-  resources :candidates
 
   get "maps/show"
 

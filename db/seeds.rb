@@ -21,6 +21,7 @@ dem = Party.create!(:name => "Democratic")
 
 bush = Candidate.create!(:name=>"Bush", :party=>rep, :image=> "icon-star")
 gore = Candidate.create!(:name=>"Gore", :party=>dem, :image=> "icon-glass")
+generic = Candidate.create!(:name=>"candidate")
 
 candidates = [bush, gore]
 
@@ -43,7 +44,7 @@ arbitrary_vote_assignments = [400000, 500000, 600000]
 i = 0
 StringIO.new(states).each_line do |ln|
   fields = ln.scan(/[(\w+) ]+/)
-  puts "#{fields[1]}+#{fields[2]}+#{fields[3]}"
+  #puts "#{fields[1]}+#{fields[2]}+#{fields[3]}"
   s = State.create!(:name=>fields[1], 
                 :abbrev=>fields[2], 
                 :electoral_votes => fields[3].to_i)
@@ -57,6 +58,7 @@ StringIO.new(states).each_line do |ln|
 end
 
 # A couple dummy events, ie special calendar dates
+=begin
 e = Event.create!(:name=>"Rally",
 		    :event_type => 'debate',
 			:location=>State.find_by_abbrev("AL"), 
@@ -120,6 +122,8 @@ e = Event.create!(:name=>"Debate",
 			:description => %Q[Ronald Reagans comes back from the dead...])
 Outcome.create!(:candidate => bush, :delta => 1, :event => e)
 Outcome.create!(:candidate => gore, :delta => 1, :event => e)
+
+=end
 
 # Initialize swing states with non-default profile
 VotingProfile.create!(:candidate=>gore, 

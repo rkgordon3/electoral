@@ -8,7 +8,7 @@ describe 'Configuration' do
 
 before(:all) {
 	#load 'lib/config/configurator.rb'
-	@config = Configurator.new("pres2008")
+	@config = Configurator.new("pres2008", "11/2/2008")
 	@event1 = @config.event_for_caption("Caption1")
 	@event2 = @config.event_for_caption("Caption2")
 	@event3 = @config.event_for_caption("Caption3")

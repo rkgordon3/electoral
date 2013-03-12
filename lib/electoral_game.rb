@@ -1,10 +1,11 @@
-class ElectoralGame < GameBase::Game
-	attr_accessor :start_date
-    attr_reader :configuration
+module ElectoralGame 
+    include GameBase::Game
+	#attr_accessor :start_date
+    #Sattr_reader :configuration
     #
     # name designates configuration file
     #
-	def initialize(name)
+	def configure(name)
 		super
                 @configuration = Configurator.new(name)
 		@start_date = Date.new(2008, 9, 1)

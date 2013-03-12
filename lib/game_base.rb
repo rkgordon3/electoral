@@ -1,9 +1,9 @@
 module GameBase
-  class Game
+  module Game
     include Board
     attr_accessor :players
 
-    def initialize(name)
+    def configure(name)
       @players = []
       @current_turn = 0
       # TODO
