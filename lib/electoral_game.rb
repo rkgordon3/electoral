@@ -6,7 +6,7 @@ class ElectoralGame < GameBase::Game
     #
 	def initialize(name)
 		super
-        @configuration = Configurator.new(name)
+                @configuration = Configurator.new(name)
 		@start_date = Date.new(2008, 9, 1)
 	end
 
