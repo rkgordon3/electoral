@@ -45,7 +45,6 @@ class State < ActiveRecord::Base
   	map = {}
   	State.all.select { |s| s.winner == candidate }.each { |s| 
 		diff = s.differential(candidate)
-		puts "diff  #{diff.to_s} in  #{s.abbrev}"
 		map[ s.state_tag] =  diff  if diff > 0 
 	}
 	map

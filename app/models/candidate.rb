@@ -2,12 +2,14 @@
 #
 # Table name: candidates
 #
-#  id         :integer         not null, primary key
-#  name       :string(255)
-#  created_at :datetime        not null
-#  updated_at :datetime        not null
-#  party_id   :integer
-#  image      :string(255)
+#  id            :integer         not null, primary key
+#  name          :string(255)
+#  created_at    :datetime        not null
+#  updated_at    :datetime        not null
+#  party_id      :integer
+#  image         :string(255)
+#  election_id   :integer
+#  campaign_date :date
 #
 
 class Candidate < ActiveRecord::Base
@@ -20,9 +22,5 @@ class Candidate < ActiveRecord::Base
   def electoral_votes
   	State.all.select { |s| s.winner==self}.collect { |s| s.electoral_votes }.sum
   end
-
-
-
-
 
 end

@@ -2,7 +2,7 @@
 
 describe event "Caption1" do
    trigger Bush
-   date "9/11/2008"
+   date "9/1/2008"
    description "An event"
    Gore outcome +1, [WI, IA, OR]
    Bush outcome -1, [MA, IA, OR]

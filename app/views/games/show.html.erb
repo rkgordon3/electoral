@@ -15,15 +15,15 @@
       
       <div class='row'>
         <div class='span6' >
-          <%= vote_table_tag(session[:game], Candidate.all) %>
+          <%= vote_table_tag(@election.candidates) %>
         </div>
       </div>
       <div class='row'>
          <div class="span1">
-           <%= roll_tag(session[:game]) %>
+           <%= roll_tag(@game) %>
          </div>
          <div class='span2'>
-            <%= link_to( 'New Game','/game_sessions/1/reset', 
+            <%= link_to( 'New Game',"#{reset_game_path(@game)}", 
                  :remote=>true, 
                  :class=> 'btn btn-primary') %>
          </div>
@@ -68,7 +68,7 @@
    var colorScheme = '#electoral_vote_scheme';
   function recolor(element) { 
 
-    $.getJSON(<%= "\'#{maps_show_path}\'" %>, recolor_handler);
+    $.getJSON(<%= "\'#{game_path(@game)}\'" %>, recolor_handler);
 
   };
 
@@ -85,9 +85,9 @@
   };
 
 $('#jCalTarget').jCal({
-	day:			new Date(<%= election_year(session[:game]) %>, 
-                 <%= campaign_start_month(session[:game])-1 %>, 
-                 <%= campaign_start_date(session[:game]) %>),
+	day:			new Date(<%= election_year(@election) %>, 
+                 <%= campaign_start_month(@election)-1 %>, 
+                 <%= campaign_start_day(@election) %>),
 	days:			1,
 	showMonths:		<%= election_cycle %>,
 	monthSelect:		false,
@@ -115,7 +115,7 @@ $('#jCalTarget').jCal({
     //});
 
   $(function(){
-  $.getJSON(<%= "\'#{maps_show_path}\'" %>, 
+  $.getJSON(<%= "\'#{game_path(@game)}\'" %>, 
     function(data){
       var year = 2008;
         $('#electoral_vote_scheme').hide()
@@ -173,7 +173,7 @@ $('#jCalTarget').jCal({
 
 
     $(function() {
-        $.getJSON(<%= "\'#{events_path}\'" %>, 
+        $.getJSON(<%= "\'#{election_events_path(@election)}\'" %>, 
             function(data) { 
               events = data.events;
               for (i = 0; i < events.length; i++) {
@@ -211,9 +211,11 @@ $('#jCalTarget').jCal({
 });
 
 function handle_move(data) {
-  date_str = <%= "\'#{session[:game].start_date.to_s}\';" %>
+
+  date_str = <%= "\'#{@election.start_date.to_s}\';" %>
   date_parts = date_str.split("-");
   start_date = new Date(date_parts[0], date_parts[1]-1, date_parts[2]);
+
 
   moves = data.moves;
               
@@ -253,7 +255,8 @@ function handle_move(data) {
 }
 
   $(function() {
-      $.getJSON(<%= "\'#{new_game_session_path}\'" %>, handle_move);
+      $.getJSON(<%= "\'#{reset_game_path(@game)}\'" %>, 
+        function(data) { alert('reset ' + data.moves); });
   });
 
 

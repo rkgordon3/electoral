@@ -20,12 +20,19 @@
 #  created_at :datetime        not null
 #  updated_at :datetime        not null
 #
-require 'electoral_game'
+
 
 class Election < ActiveRecord::Base
-  validates  :name, presence: true, uniqueness: { case_sensitive: false }
+  validates  :name, presence: true
+  #, uniqueness: { case_sensitive: false }
   attr_accessible :game_id, :name, :date
   has_many :events
   has_many :candidates
   belongs_to :game
+
+  attr_reader :start_date
+
+  def start_date
+  	@state_date ||= Date.new(date.year, date.month-2, 1)
+  end
 end

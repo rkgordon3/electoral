@@ -3,11 +3,9 @@ class EventsController < ApplicationController
   # GET /events
   # GET /events.json
   def index
-    #@events = Event.all
-    @events = session[:game].configuration.events
-    puts @events
+    @election = Election.find(params[:election_id])
+    @events = @election.events
     respond_with(@events)
-
   end
 
   # GET /events/1

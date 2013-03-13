@@ -12,14 +12,13 @@ module EventsHelper
 			e.outcomes.each { |o| 
 				outcomes << { :candidate => o.candidate.name, :delta => o.delta }
 			}
-=end
-		    month, day, year = e.event_date.split("/")
-			events_array << { :name => e.caption, 
-				              :month => month, 
-				              :date => day, 
+=end 
+			events_array << { :name => e.name, 
+				              :month => e.date.month, 
+				              :date => e.date.day, 
 				              :type => "debate",
-				              :year => year, 
-				              :description => e.event_description,
+				              :year => e.date.year, 
+				              :description => e.description,
 				              :outcomes => outcomes  }
 		end
 		setup[:events] = events_array

@@ -1,5 +1,5 @@
 module GameBase
-  module Game
+  module GameExt
     include Board
     attr_accessor :players
 

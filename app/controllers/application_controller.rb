@@ -7,17 +7,5 @@ class ApplicationController < ActionController::Base
 
 
   	def set_game
-      parties = ["Republican", "Democratic"]
-      images = [ "icon-star", "icon-glass"]
-  		begin
-  			game = ElectoralGame.new("pres2008")
-        i = 0
-        game.configuration.candidates.each { |c|
-          game.add_player(Candidate.new(name: c, party_id: Party.find_by_name(parties[i % 2]).id, image: images[i%2]))
-          i += 1
-        }
-    		session[:game] = game
-		  end if session[:game].nil?
-      session[:game]
   	end
 end

@@ -3,7 +3,7 @@ module CandidatesHelper
 		collection_select(:candidate, :party_id, Party.all, :id, :name)
 	end
 
-	def vote_table_tag(game, candidates)
+	def vote_table_tag(candidates)
 		out =  %Q[<table class="table table-bordered" >]
 		out += %Q[<thead><td>Candidate</td><td>Popular Votes</td><td>Electoral Votes</td></tr></thead>]
 		candidates.each do |c|

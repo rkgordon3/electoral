@@ -1,7 +1,7 @@
 {
-"electoral_votes": <%= json_electoral_votes %>,
-"percent_differential" : <%= json_percent_differential %>,
-"voting_profiles": <%= json_voting_profiles %>,
+"electoral_votes": <%= json_electoral_votes(@game) %>,
+"percent_differential" : <%= json_percent_differential(@game) %>,
+"voting_profiles": <%= json_voting_profiles(@game) %>,
 "states":
 {"2005":
  {"US-AL":7.2,"US-AK":8.6,"US-AZ":6.3,"US-AR":6.9,"US-CA":7.2,"US-CO":6.2,"US-CT":6.3,"US-DE":5.6,"US-DC":9.1,"US-FL":6.3,"US-GA":7.4,"US-HI":4.4,"US-ID":5.8,"US-IL":7.9,"US-IN":6.9,"US-IA":5.1,"US-KS":5.5,"US-KY":7.5,"US-LA":9.0,"US-ME":5.7,"US-MD":5.7,"US-MA":6.4,"US-MI":8.9},
@@ -11,7 +11,7 @@
  {"US-AL":6.7,"US-AK":8.8,"US-AZ":5.8,"US-AR":7.2,"US-CA":6.6,"US-CO":5.5,"US-CT":6.0,"US-DE":5.6,"US-DC":8.1,"US-FL":6.2,"US-GA":7.0,"US-HI":4.5,"US-ID":5.1,"US-IL":7.2,"US-IN":6.6,"US-IA":4.8,"US-KS":5.1,"US-KY":6.6,"US-LA":6.4,"US-ME":6.0,"US-MD":5.5,"US-MA":6.1,"US-MI":9.6,"US-MN":5.4,"US-MS":9.3,"US-MO":6.3,"US-MT":5.2,"US-NE":4.6,"US-NV":5.6,"US-NH":5.1,"US-NJ":5.9,"US-NM":5.6,"US-NY":6.2,"US-NC":6.9,"US-ND":3.5,"US-OH":7.2,"US-OK":5.4,"US-OR":6.5,"US-PA":5.9,"US-RI":6.3,"US-SC":6.9,"US-SD":4.1,"US-TN":6.9,"US-TX":5.9,"US-UT":3.8,"US-VT":5.1,"US-VA":4.8,"US-WA":6.0,"US-WV":6.2,"US-WI":5.7,"US-WY":3.7},
  "2008":
 
-<%= json_electoral_votes %>
+<%= json_electoral_votes(@game) %>
 ,
  "2009":
  {"US-AL":13.1,"US-AK":9.5,"US-AZ":10.6,"US-AR":9.1,"US-CA":11.3,"US-CO":8.5,"US-CT":9.2,"US-DE":8.6,"US-DC":11.1,"US-FL":12.1,"US-GA":11.2,"US-HI":7.1,"US-ID":9.6,"US-IL":10.6,"US-IN":11.0,"US-IA":6.0,"US-KS":7.2,"US-KY":10.1,"US-LA":8.4,"US-ME":7.2,"US-MD":8.0,"US-MA":9.1,"US-MI":14.7,"US-MN":8.2,"US-MS":10.7,"US-MO":9.0,"US-MT":7.9,"US-NE":6.0,"US-NV":12.1,"US-NH":7.8,"US-NJ":9.8,"US-NM":9.0,"US-NY":9.0,"US-NC":11.0,"US-ND":3.8,"US-OH":11.1,"US-OK":6.8,"US-OR":11.8,"US-PA":9.1,"US-RI":9.6,"US-SC":11.7,"US-SD":5.2,"US-TN":11.1,"US-TX":8.2,"US-UT":7.8,"US-VT":7.6,"US-VA":7.4,"US-WA":9.5,"US-WV":7.7,"US-WI":8.2,"US-WY":5.9}

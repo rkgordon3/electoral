@@ -16,7 +16,7 @@ before(:all) {
   @event5 = @config.event_for_caption("Caption5")
 }
   it 'should report five events' do
-    @config.events.length.should == 5
+    @config.events.length.should == 7
   end
 
   it "should contain proper captions" do
@@ -56,7 +56,8 @@ before(:all) {
   end
 
   it "should report  10/11/2008 as date for Caption1" do
-    @event1.event_date.should == "10/11/2008" 
+    @event1.event_date.to_s.should == DateTime.new(2008,9,1).strftime("%Y-%m-%d")
+
   end
 
   it "should report yes and no outcomes for Gore in Caption4" do

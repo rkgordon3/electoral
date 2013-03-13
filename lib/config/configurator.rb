@@ -50,7 +50,7 @@ def persist
   images = [ "icon-star", "icon-glass"]
   i = 0
   election = Election.create!(name: @name, date: @date)
-  Candidate.create!(name: "candidate", election: election)
+  #Candidate.create!(name: "candidate", election: election)
   candidates.each { |c|
     mc = Candidate.create!(election: election, name: c, party_id: Party.find_by_name(parties[i % 2]).id, image: images[i%2])
     election.candidates << mc
@@ -64,7 +64,7 @@ def persist
                       description: e.event_description,
                       event_type: "debate",
                       election_id: election.id,
-                      trigger_candidate: Candidate.find_by_name(e.candidate))
+                      trigger_candidate: Candidate.find_by_name(e.candidate) || nil)
     e.outcomes.each_key { |candy| 
      
       outcomes_for_candy = e.outcomes[candy]
@@ -107,7 +107,7 @@ def persist
     election.events << event
   }
   election.save
-
+  election
 end
 
 

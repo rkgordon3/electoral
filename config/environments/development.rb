@@ -34,4 +34,7 @@ Map::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+
+  # Set to :debug to show sql queries
+  config.log_level = :info
 end

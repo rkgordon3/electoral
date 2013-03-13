@@ -12,6 +12,8 @@ end
 module Map
   class Application < Rails::Application
 
+
+
     def election_year
         "2008"
     end
@@ -63,6 +65,7 @@ module Map
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
    
+    
 
   end
 end

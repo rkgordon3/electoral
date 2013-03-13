@@ -1,5 +1,16 @@
 Map::Application.routes.draw do
 
+
+
+  resources :games do
+    resources :player_states
+    resources :voting_profiles
+
+    post "roll"
+    get "reset", :on => :member
+    get "players"
+  end
+
   resources :elections do
     resources :events
     resources :candidates
@@ -8,14 +19,6 @@ Map::Application.routes.draw do
 
   get "maps/show"
 
-  resources :game_sessions do
-    post "roll" 
-    get "reset"
-    get "players"
-  end
-
-
-  
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

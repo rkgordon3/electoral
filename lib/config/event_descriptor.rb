@@ -43,7 +43,7 @@ class EventDescriptor
     @event_description = d
   end
   def date(d)
-    @event_date = d
+    @event_date = Date.strptime d, "%m/%d/%Y"
   end
 
 
