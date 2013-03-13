@@ -130,6 +130,10 @@
 	background-color:hsl(180, 30%, 60%);
 }
 
+.jCalMo  .policy  {
+	background-color:hsl(140, 30%, 40%);
+}
+
 .jCalMo .event .stumpSpeech {
 	background-color:hsl(180, 30%, 60%);
 }
