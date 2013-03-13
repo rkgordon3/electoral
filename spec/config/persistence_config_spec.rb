@@ -6,7 +6,6 @@ include States
 
 describe "Persistence" do
   before(:all) {
-  	p "***************** running before "
     @election = Configurator.new("pres2008", "11/2/2008")
     @election.persist
     @events = @election.events
@@ -26,9 +25,41 @@ describe "Persistence" do
   end
 
   it "should have 7 events" do
-  	@election_model.events.size.should == 7
-    
+  	@election_model.events.size.should == 7  
   end
 
+  it "should have 1 event triggered by Bush" do
+    event = @election_model.events[0]
+    event.trigger_candidate.name.should == "Bush"
+  end
+
+  it "should have +1 for Gore in [WI, IA, OR]" do
+    event = @election_model.events[0]
+    outcomes = event.outcomes_for("Gore")
+    outcomes.size.should == 1
+    outcomes.first.delta.should == 1
+    outcomes.first.demographics.select { |d| d.type_of == "State" }.size.should == 3
+    outcomes.first.demographics.collect { |d| 
+          d.type_of.constantize.find(d.value_id).abbrev 
+          }.should == [WI, IA, OR]
+  end
+
+  it "should have -1 for Bush in [WI, IA, OR]" do
+    event = @election_model.events[0]
+    outcomes = event.outcomes_for("Bush")
+    outcomes.size.should == 1
+    outcomes.first.delta.should == -1
+    outcomes.first.demographics.select { |d| d.type_of == "State" }.size.should == 3
+    outcomes.first.demographics.collect { |d| 
+          d.type_of.constantize.find(d.value_id).abbrev 
+          }.should == [MA, IA, OR]
+  end
+
+  it "should have an event with title 'Caption4' " do
+    event = Event.find_by_name("Caption4")
+    event.nil?.should == false
+    event.outcomes_for("Gore").size == 2
+
+  end
 
 end
