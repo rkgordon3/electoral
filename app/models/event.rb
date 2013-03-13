@@ -21,4 +21,8 @@ class Event < ActiveRecord::Base
   has_many :outcomes
   belongs_to :election
   belongs_to :trigger_candidate, class_name: "Candidate", foreign_key: :candidate_id
+
+  def outcomes_for(name) 
+  	outcomes.where(:candidate_id => Candidate.find_by_name(name))
+  end
 end
