@@ -12,8 +12,7 @@
 
 class Candidate < ActiveRecord::Base
 
-  attr_accessible :name, :party_id, :party, :image, :election
-  attr_accessor :campaign_date
+  attr_accessible :name, :party_id, :party, :image, :election, :campaign_date
   belongs_to :party
   belongs_to :election
   has_many :voting_profiles
