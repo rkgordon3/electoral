@@ -1,7 +1,7 @@
 require 'root.rb'
-
 require 'events.rb'
 require "#{Root::Election}/candidates.rb"
+require "#{Root::Election}/profiles"
 require 'states.rb'
 require 'election_configuration.rb'
 
@@ -11,6 +11,7 @@ class Configurator
 include States
 include Events
 include Candidates
+
 
 attr_reader :events
 
@@ -56,6 +57,9 @@ def persist
     election.candidates << mc
     i += 1
   }
+
+  hash = Candidate.where(["election_id = ?", election.id]).index_by(&:name)
+  Profiles.populate(election, hash)
 
   @events.each { |e| 
    

@@ -1,4 +1,4 @@
-require 'csv.rb'
+require 'csv'
 require 'root.rb'
 
 
@@ -12,6 +12,13 @@ module States
  	}
 	def all_states
   		@all_states
+	end
+
+	def swing_states
+
+ 		["AR", "AZ", "FL", "IA", "MI", "MO", "NV",
+                    "NH", "NM", "OR", "PA", "TN", "UT", "WV", "WI"]
+
 	end
 
 

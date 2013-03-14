@@ -41,6 +41,7 @@ states =
 # data for now. I flipped values on alternate states, giving
 # each candidate popular vote victory in 50% of non-swing states
 arbitrary_vote_assignments = [400000, 500000, 600000]
+=begin
 i = 0
 StringIO.new(states).each_line do |ln|
   fields = ln.scan(/[(\w+) ]+/)
@@ -56,7 +57,7 @@ StringIO.new(states).each_line do |ln|
     i += 1
   end unless swing_states.include?(s.abbrev)
 end
-
+=end
 # A couple dummy events, ie special calendar dates
 =begin
 e = Event.create!(:name=>"Rally",
@@ -125,6 +126,7 @@ Outcome.create!(:candidate => gore, :delta => 1, :event => e)
 
 =end
 
+=begin
 # Initialize swing states with non-default profile
 VotingProfile.create!(:candidate=>gore, 
 	                  :state=>State.find_by_abbrev("AZ"), 
@@ -219,3 +221,4 @@ VotingProfile.create!(:candidate=>bush,
 	                  :votes=>1234000)
 
 
+=end
