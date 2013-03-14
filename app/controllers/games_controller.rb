@@ -1,4 +1,5 @@
 class GamesController < ApplicationController
+  include GamesHelper
   caches_action :show
   respond_to :json, :html
   # GET /games
@@ -97,23 +98,24 @@ class GamesController < ApplicationController
     die = params[:die]
     roll_total = die.collect { |v| v.to_i }.sum
     player = game.player_in_turn
-    old_ndays  = game.location(player)
+    name = player.name
+    token = player.image
+    from  = game.location(player)
    
     game.advance(player,roll_total)
-    new_ndays = game.location(player)
+    to = game.location(player)
 
     logger.debug("die0 = #{die[0]}")
     logger.debug("die1 = #{die[1]}")
     turn = game.next_turn
     logger.debug("*******turn  #{turn}")
     game.player_in_turn = game.election.candidates[turn]
-
-    response = {  :player_in_turn => game.player_in_turn.name, 
-                  :moves => [ { :player=> player.name, 
-                                :token => player.image,
-                                :to => new_ndays,
-                                :from => old_ndays}]
-               }
+    game.save
+    response = move_helper(game.player_in_turn.name, 
+                             [{ :player=> name, 
+                                :token => token,
+                                :to => to,
+                                :from => from}])
 
     respond_to do |format|
       format.json { render json: response }
@@ -127,6 +129,7 @@ class GamesController < ApplicationController
     @game = Game.find(params[:id])
     @game.current_turn = 0
     @game.player_states.each {|p| p.location = 0 }
+    @game.player_in_turn = @game.election.candidates[0]
     @game.save
     redirect_to game_path(@game)
   end

@@ -23,8 +23,9 @@
            <%= roll_tag(@game) %>
          </div>
          <div class='span2'>
-            <%= link_to( 'New Game',"#{reset_game_path(@game)}", 
-                 :remote=>true, 
+            <%= button_tag( 'New Game', 
+                
+                 :onclick=> 'reset_button(this);',
                  :class=> 'btn btn-primary') %>
          </div>
       </div>
@@ -98,33 +99,24 @@ $('#jCalTarget').jCal({
 		}
 	});
 
-  function close_popover(elem) {
-  
+  function close_popover(elem) {  
     s = elem.id;
-    //alert(s);
-    //alert($(s).text());
     pop_day_id = s.substring(0,s.length-1);
-
-    $(pop_day_id).popover('hide');
-      
+    $(pop_day_id).popover('hide');    
   }
 
+  function initialize_game(data){
+    alert('game init');
+    var year = 2008;
+    $('#electoral_vote_scheme').hide();
+    // Remove any existing player
+    $("div[class*='player']").remove();
+    handle_move(data.moves);
 
-    //$(function(){
-    //  $('#us-map').vectorMap({map: 'us_aea_en'});
-    //});
+    statesValues = jvm.values.apply({}, jvm.values(data.electoral_votes));
 
-  $(function(){
-  $.getJSON(<%= "\'#{game_path(@game)}\'" %>, 
-    function(data){
-      var year = 2008;
-        $('#electoral_vote_scheme').hide()
-
-        statesValues = jvm.values.apply({}, jvm.values(data.electoral_votes)),
-        metroPopValues = Array.prototype.concat.apply([], jvm.values(data.metro.population)),
-        metroUnemplValues = Array.prototype.concat.apply([], jvm.values(data.metro.unemployment));
-       
-
+    // Remove div for map
+    $('.jvectormap-container').remove();
     $('#us-map').vectorMap({
       map: 'us_aea_en',
       backgroundColor: '#707070',
@@ -207,38 +199,43 @@ $('#jCalTarget').jCal({
         });
       });
 
+  }
+
+  $(function(){
+    $.getJSON(<%= "\'#{game_path(@game)}\'" %>, 
+       function(data) { initialize_game(data) } );
   });
-});
 
 function handle_move(data) {
-
   date_str = <%= "\'#{@election.start_date.to_s}\';" %>
   date_parts = date_str.split("-");
   start_date = new Date(date_parts[0], date_parts[1]-1, date_parts[2]);
-
 
   moves = data.moves;
               
   for (i = 0; i < moves.length; i++) {
     player = moves[i].player;
-
-    to = moves[i].to;
-    to_date = new Date(date_parts[0], date_parts[1]-1, parseInt(date_parts[2]) + parseInt(to) );
     token = moves[i].token;
-             
-    to_day_id = date_to_tag(to_date);
+    
     from = moves[i].from;
     if (from != undefined) {
+
       from_date = new Date(date_parts[0], date_parts[1]-1, parseInt(date_parts[2]) + parseInt(from) );
       rm_day_id = date_to_tag(from_date);
+    
       rm_selector = rm_day_id +" >  div[title='" + player + "']";
       $(rm_selector).remove(); 
       pieces = $(rm_day_id + " div");
-      for (i = 0; i < pieces.length; i++) {
-        pieces[i].className = "player" + i
+      for (k = 0; k < pieces.length; k++) {
+        pieces[k].className = "player" + k
       }
     }
-                  
+    to = moves[i].to;
+    to_date = new Date(date_parts[0], date_parts[1]-1, parseInt(date_parts[2]) + parseInt(to) );
+  
+             
+    to_day_id = date_to_tag(to_date);
+    
     style_id = $(to_day_id + " div").length;
     $(to_day_id).html(
       $(to_day_id).html()+"<div title=" 
@@ -254,10 +251,11 @@ function handle_move(data) {
 
 }
 
-  $(function() {
-      $.getJSON(<%= "\'#{reset_game_path(@game)}\'" %>, 
-        function(data) { alert('reset ' + data.moves); });
-  });
+// re-initialize game
+function reset_button(e) {
+    $.getJSON(<%= "\'#{reset_game_path(@game)}\'" %>, 
+        function(data) { initialize_game(data); });
+};
 
 
 
