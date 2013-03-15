@@ -15,7 +15,7 @@ F<div class="center hero-unit" >
       
       <div class='row'>
         <div id=<%= vote_table_id(@election) %> class='span6' >
-          <%= vote_table(@election.candidates) %>
+          <%= vote_table(@election.active_candidates) %>
         </div>
       </div>
       <div class='row'>
@@ -72,10 +72,6 @@ F<div class="center hero-unit" >
 
   };
 
-  function month_day_year_to_tag(month, day, year) {
-    return date_to_tag(new Date(year, month-1, day));
-
-  };
   function date_to_tag(date) {
     
     return "#c" +$('.jCalMo').length + "d_" 
@@ -206,11 +202,14 @@ function handle_move(data) {
                  +"<i class='"
                  +token
                  +"'></i></div>");
-    $(to_day_id).popover('show'); 
+    //$(to_day_id).popover('show'); 
+
+    if (moves[i].event > 0) {
+      $.get(<%= "\'#{event_activate_path}\'" %>, { 'candidate' : player, 'event_id' : moves[i].event}, "js");
+            
+    }
 
   }
-
-
 }
 
 // re-initialize game
@@ -218,9 +217,4 @@ function reset_button(e) {
     $.getJSON(<%= "\'#{reset_game_path(@game)}\'" %>, 
         function(data) { initialize_game(data); });
 };
-
-
-
-
-
-    </script>
+</script>

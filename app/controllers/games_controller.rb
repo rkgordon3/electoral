@@ -18,7 +18,7 @@ class GamesController < ApplicationController
   def show
     @game = Game.find(params[:id])
     @election = @game.election
-    @game.player_in_turn = @election.candidates[1]
+    @game.player_in_turn = @election.active_candidates[1]
     respond_with(@game)
   end
 
@@ -46,11 +46,11 @@ class GamesController < ApplicationController
     @election = Configurator.new(@game.config_file, @game.start_date).persist
 
     @game.election = @election
-    @game.player_states= @election.candidates.collect { |c| 
+    @game.player_states= @election.active_candidates.collect { |c| 
       PlayerState.create!(player_id: c.id, game_id: @game.id, type_of: "Candidate", location: 0 ) }.select{ 
         |p| !p.nil?
     }
-    @game.player_in_turn = @election.candidates[0]
+    @game.player_in_turn = @election.active_candidates[0]
 
     respond_to do |format|
       if @game.save
@@ -105,17 +105,21 @@ class GamesController < ApplicationController
     game.advance(player,roll_total)
     to = game.location(player)
 
+    landing_date = game.election.campaign_date(to)
+    landing_date_event = game.election.event_for(player, landing_date)
+    logger.info("landing date event #{landing_date_event.inspect}")
     logger.debug("die0 = #{die[0]}")
     logger.debug("die1 = #{die[1]}")
     turn = game.next_turn
     logger.debug("*******turn  #{turn}")
-    game.player_in_turn = game.election.candidates[turn]
+    game.player_in_turn = game.election.active_candidates[turn]
     game.save
     response = move_helper(game.player_in_turn.name, 
                              [{ :player=> name, 
                                 :token => token,
                                 :to => to,
-                                :from => from}])
+                                :from => from,
+                                :event=> (landing_date_event.id rescue -1) }])
 
     respond_to do |format|
       format.json { render json: response }
@@ -129,7 +133,7 @@ class GamesController < ApplicationController
     @game = Game.find(params[:id])
     @game.current_turn = 0
     @game.player_states.each {|p| p.location = 0 }
-    @game.player_in_turn = @game.election.candidates[0]
+    @game.player_in_turn = @game.election.active_candidates[0]
     @game.save
     redirect_to game_path(@game)
   end

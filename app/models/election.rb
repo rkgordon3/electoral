@@ -33,6 +33,26 @@ class Election < ActiveRecord::Base
   attr_reader :start_date
 
   def start_date
-  	@state_date ||= Date.new(date.year, date.month-2, 1)
+  	@start_date ||= Date.new(date.year, date.month-2, 1)
   end
+  #
+  # Convert a value represent 'days into campaign' into
+  # a date
+  #
+  def campaign_date(to)
+    start_date + to.days
+  end
+
+  #
+  # Return event for player on given date
+  def event_for(player, date)
+    next_day = date + 1.day
+    res = events.where(:candidate_id => [ player.id, Candidate.find_by_name("candidate").id]).where(:date => date..next_day)
+    res.size == 1 ? res[0] : res.select { |e| e.candidate_id == player.id }[0]
+  end
+
+  def active_candidates
+    candidates.select { |c| c.name != "candidate" }
+  end
+
 end

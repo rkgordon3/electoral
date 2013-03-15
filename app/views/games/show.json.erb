@@ -1,9 +1,10 @@
 {
 	"moves" : <%= move_helper(@game.player_in_turn.name, 
-		@game.election.candidates.each.collect do |c|
+		@game.election.active_candidates.each.collect do |c|
 			{ :player=> c.name, 
                     :token => c.image,
-                    :to => 0
+                    :to => 0,
+                    :event=> -1
 			}
 		end ).to_json.html_safe
 	    %>,

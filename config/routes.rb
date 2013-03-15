@@ -20,10 +20,10 @@ Map::Application.routes.draw do
     get 'outcome'
   end
 
+  match 'event/activate' => 'events#activate'
+
 
   match '/events/:event_id/:response' => 'events#outcome', :as=> :outcome, :via => :get
-
-
 
   get "maps/show"
 

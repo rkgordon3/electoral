@@ -23,13 +23,14 @@ module EventsHelper
 	# to calendar day to reflect the type of event that occurs on that day, ie.
 	# events of color-coded.
 	#
-  	def popover(election, event)
+  	def popover(election, event, active = false)
   		buttons = button_tag("Ok", 
   			       :id=> "#{id_tag_for(event)}b",
   			       :class=>'btn btn-success btn-mini',
   			       :onclick=>"$('##{id_tag_for(event)}').popover('hide');$.get('#{outcome_path(event, "ok")}', { }, 'js');"
   			       ).gsub(/'/, "&quot;").gsub(/"/, "'")
   		outcome  = "Bush +1, Gore -1"
+      activate = active ?  %Q[$('##{id_tag_for(event)}').popover('show');] : ""
   		%Q[
   	    $('##{id_tag_for(event)}').popover(
   	    		{ 	html:true,
@@ -41,7 +42,7 @@ module EventsHelper
         			}
 				}
         );
-
+      #{activate}
     	$('##{id_tag_for(event)}').addClass('#{event.event_type}');
     	].html_safe
     end

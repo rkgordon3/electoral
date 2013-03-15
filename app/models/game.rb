@@ -20,8 +20,6 @@ class Game < ActiveRecord::Base
   belongs_to :player_in_turn, class_name: "Candidate", foreign_key: :candidate_id
 
   after_find { @nplayers = player_states.length }
-
-
   
   def advance(player, steps)
   	state_for(player).location += steps

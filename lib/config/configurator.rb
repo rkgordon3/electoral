@@ -48,10 +48,14 @@ end
 
 def persist
   parties = ["Republican", "Democratic"]
+
+
+  parties.each { |n| Party.create!(name: n) }
   images = [ "icon-star", "icon-glass"]
+
   i = 0
   election = Election.create!(name: @name, date: @date)
-  #
+  generic_candidate = Candidate.create!(name: "candidate", election: election)
   candidates.each { |c|
     mc = Candidate.create!(election: election, name: c, party_id: Party.find_by_name(parties[i % 2]).id, image: images[i%2])
     election.candidates << mc
@@ -68,11 +72,11 @@ def persist
                       description: e.event_description,
                       event_type: e.event_type,
                       election_id: election.id,
-                      trigger_candidate: Candidate.find_by_name(e.candidate) || nil)
+                      trigger_candidate: Candidate.find_by_name_and_election_id(e.candidate, election.id))
     e.outcomes.each_key { |candy| 
       
       outcomes_for_candy = e.outcomes[candy]
-      candy_id = Candidate.find_by_name(candy.to_s).id rescue Candidate.create!(name: "candidate", election: election).id
+      candy_id = Candidate.find_by_name(candy.to_s).id 
       case outcomes_for_candy
         
       when Array

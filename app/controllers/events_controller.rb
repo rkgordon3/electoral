@@ -82,7 +82,15 @@ class EventsController < ApplicationController
   def outcome
     logger.info("apply outcomes")
     @event = Event.find(params[:event_id])
-    @election = Election.find(@event.election_id)
-    
+    @election = Election.find(@event.election_id) 
+  end
+
+  #
+  # Activate an event for a candidate
+  #
+  def activate
+    logger.info("activate for #{params[:candidate]} on #{params[:event_id]}")
+    @event = Event.find(params[:event_id])
+    respond_with(@election, @event)
   end
 end

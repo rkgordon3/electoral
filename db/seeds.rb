@@ -19,11 +19,11 @@ Event.destroy_all
 rep = Party.create!(:name => "Republican")
 dem = Party.create!(:name => "Democratic")
 
-bush = Candidate.create!(:name=>"Bush", :party=>rep, :image=> "icon-star")
-gore = Candidate.create!(:name=>"Gore", :party=>dem, :image=> "icon-glass")
-generic = Candidate.create!(:name=>"candidate")
+#bush = Candidate.create!(:name=>"Bush", :party=>rep, :image=> "icon-star")
+#gore = Candidate.create!(:name=>"Gore", :party=>dem, :image=> "icon-glass")
+#generic = Candidate.create!(:name=>"candidate")
 
-candidates = [bush, gore]
+#candidates = [bush, gore]
 
 # Keep track of swing states so I don't create default 
 # profile on initialization
