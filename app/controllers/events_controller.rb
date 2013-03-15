@@ -1,5 +1,5 @@
 class EventsController < ApplicationController
-  respond_to :json, :html
+  respond_to :js, :json, :html
   # GET /events
   # GET /events.json
   def index

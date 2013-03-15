@@ -25,4 +25,6 @@ class Event < ActiveRecord::Base
   def outcomes_for(name) 
   	outcomes.where(:candidate_id => Candidate.find_by_name(name))
   end
+
+
 end

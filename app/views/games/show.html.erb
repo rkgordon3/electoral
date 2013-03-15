@@ -24,7 +24,6 @@ F<div class="center hero-unit" >
          </div>
          <div class='span2'>
             <%= button_tag( 'New Game', 
-                
                  :onclick=> 'reset_button(this);',
                  :class=> 'btn btn-primary') %>
          </div>
@@ -99,14 +98,9 @@ $('#jCalTarget').jCal({
 		}
 	});
 
-  function close_popover(elem) {  
-    s = elem.id;
-    pop_day_id = s.substring(0,s.length-1);
-    $(pop_day_id).popover('hide');    
-  }
 
   function initialize_game(data){
-    alert('game init');
+  
     var year = 2008;
     $('#electoral_vote_scheme').hide();
     // Remove any existing player
@@ -162,42 +156,9 @@ $('#jCalTarget').jCal({
 
     var mapObject = $('#us-map').vectorMap('get', 'mapObject');
 
-
-
     $(function() {
-        $.getJSON(<%= "\'#{election_events_path(@election)}\'" %>, 
-            function(data) { 
-              events = data.events;
-              for (i = 0; i < events.length; i++) {
-                dateId =  month_day_year_to_tag(events[i].month,
-                                                events[i].date,
-                                                events[i].year);
-                outs  = events[i].outcomes;
-                
-               /*
-                outtable = "<table>";
-                for (i = 0; i < outs.length; i++) {
-                    outtable += "<tr><td>" + outs[i].candidate + "</td><td>" + outs[i].delta + "</td></tr>";
-                }
-                outtable += "</table>";
-                */
-               
-                /* html = '<span>' + events[i].description  + '</span><br/>Outcomes:<br/>' + outtable; */
-                bid = dateId+'b';
-             
-                $(dateId).popover({ html:true,
-                                placement:'bottom',
-                                trigger: 'click',
-                                title: events[i].name,
-                                content: "<span>"+events[i].description 
-                                  + "</span><br/>" 
-                                  + "Bush:+1<br/>Gore:-1<br/>" 
-                                  + "<button id='" + bid + "' class='btn btn-success btn-mini' type='button' onclick='close_popover(this);'>Ok</button>" });
-    
-                $(dateId).addClass(events[i].type);
-              }
-        });
-      });
+      $.get(<%= "\'#{election_events_path(@election)}\'" %>, {}, "js" );
+    });
 
   }
 
