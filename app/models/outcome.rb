@@ -16,4 +16,7 @@ class Outcome < ActiveRecord::Base
   belongs_to :candidate
   belongs_to :event
   has_many :demographics
+
+  def apply
+  end
 end

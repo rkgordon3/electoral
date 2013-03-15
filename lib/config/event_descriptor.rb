@@ -16,6 +16,7 @@ class EventDescriptor
   attr_accessor :candidate
   attr_accessor :event_date
   attr_reader :event_description
+  attr_accessor :event_type
 
   def initialize(caption = nil) 
     @caption = caption
@@ -69,6 +70,8 @@ class EventDescriptor
   private
   def complete
     @outcomes.merge!(@pending)
+    self.class.to_s =~ /(.*)Descriptor/
+    @event_type = $~[1].downcase
   end
 end
 

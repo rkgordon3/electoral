@@ -14,8 +14,8 @@ F<div class="center hero-unit" >
       </div>
       
       <div class='row'>
-        <div class='span6' >
-          <%= vote_table_tag(@election.candidates) %>
+        <div id=<%= vote_table_id(@election) %> class='span6' >
+          <%= vote_table(@election.candidates) %>
         </div>
       </div>
       <div class='row'>

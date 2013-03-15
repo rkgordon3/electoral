@@ -16,6 +16,14 @@ Map::Application.routes.draw do
     resources :candidates
   end
 
+  resources :events do
+    get 'outcome'
+  end
+
+
+  match '/events/:event_id/:response' => 'events#outcome', :as=> :outcome, :via => :get
+
+
 
   get "maps/show"
 

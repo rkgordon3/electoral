@@ -45,7 +45,7 @@ describe policy "Caption6" do
   responds no outcome -1, [MI, MO]
 end
 
-describe policy "Caption7" do
+describe policy "Debate" do
   date "9/7/2008"
   description "A caption 7 event"
   Gore responds yes outcome +1, [MI, MO]

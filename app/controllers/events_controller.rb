@@ -5,7 +5,7 @@ class EventsController < ApplicationController
   def index
     @election = Election.find(params[:election_id])
     @events = @election.events
-    respond_with(@events)
+    respond_with(@election, @events)
   end
 
   # GET /events/1
@@ -77,5 +77,12 @@ class EventsController < ApplicationController
       format.html { redirect_to events_url }
       format.json { head :no_content }
     end
+  end
+
+  def outcome
+    logger.info("apply outcomes")
+    @event = Event.find(params[:event_id])
+    @election = Election.find(@event.election_id)
+    
   end
 end
