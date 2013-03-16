@@ -71,12 +71,15 @@ class EventDescriptor
   private
   def complete
     @outcomes.merge!(@pending)
+    puts "outcomes for #{event_date} #{@outcomes.inspect}"
     generic_outcomes = @outcomes[:candidate]
     generic_outcomes.each_pair { |k,v| 
+
         @outcomes.each_key { |target|
+           puts "merging default in #{target}"
            @outcomes[target].reverse_merge!(generic_outcomes)
         }
-    } if not generic_outcomes.nil?
+    } unless generic_outcomes.nil?
     self.class.to_s =~ /(.*)Descriptor/
     @event_type = $~[1].downcase
   end

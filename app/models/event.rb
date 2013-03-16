@@ -23,14 +23,17 @@ class Event < ActiveRecord::Base
   belongs_to :trigger_candidate, class_name: "Candidate", foreign_key: :candidate_id
 
   def outcomes_for(name) 
+    result = nil
   	case name
   	when Candidate
-  		outcomes.where(:candidate_id => name.id)
+  		result = outcomes.where(:candidate_id => name.id)
   	when Fixnum
-  		outcomes.where(:candidate_id => name)
+  		result = outcomes.where(:candidate_id => name)
   	else
-  		outcomes.where(:candidate_id => Candidate.find_by_name(name))
+  		result = outcomes.where(:candidate_id => Candidate.find_by_name(name))
   	end
+    result || outcomes.where(:name => "candidate")
+
   end
 
 

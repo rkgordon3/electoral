@@ -13,12 +13,17 @@ module EventsHelper
   end
 
   def response_form(candidate, event)
+    class_map = { yes: "success", no: "danger"}
     outcomes = event.outcomes_for(candidate)
-    form_tag(event_outcome_path) do  	
+
+    form_tag(event_outcome_path, :remote=>true) do  	
       [ hidden_field_tag('candidate_id', candidate.id),
         hidden_field_tag('event_id', event.id),
         outcomes.each.collect { |oc| 
-        	button_tag(oc.trigger, :class=>'btn btn-success btn-mini') 
+          trigger = oc.trigger || "Ok"
+        	button_tag(oc.trigger, 
+                       :class=>"btn btn-#{class_map[oc.trigger.downcase.to_sym]} btn-mini",
+                       :value=> trigger) 
         }.join("")
       ].join("<br/>").html_safe
     end
@@ -42,7 +47,7 @@ module EventsHelper
 			       :class=>'btn btn-success btn-mini',
 			       :onclick=>"$('##{id_tag_for(event)}').popover('hide');$.get('#{outcome_path(event, "ok")}', { }, 'js');"
 			       ).gsub(/'/, "&quot;").gsub(/"/, "'")
-		outcome  = response_form(candidate, event).gsub(/'/, "&quot;").gsub(/"/, "'")
+		outcome_form = response_form(candidate, event).gsub(/'/, "&quot;").gsub(/"/, "'")
     activate = active ?  %Q[$('##{id_tag_for(event)}').popover('show');] : ""
 		%Q[
 	    $('##{id_tag_for(event)}').popover(
@@ -51,12 +56,12 @@ module EventsHelper
       			trigger: 'click',
       			title: '#{event.name}',
       			content:  function(){ 
-      				return "<span>#{event.description}</span><br/>#{outcome}";
+      				return "<span>#{event.description}</span><br/>#{outcome_form}";
       			}
 			}
       );
     #{activate}
-  	$('##{id_tag_for(event)}').addClass('#{event.event_type}');
+  
   	].html_safe
   end
 end

@@ -27,28 +27,40 @@ describe Election do
 
   it 'should report one event for Bush on 9-1' do
      event = @election.event_for(@bush, Date.new(2008, 9, 1))
-     event.should_not == nil
+     assert event
   end
 
   it 'should report candidate exists' do
-    @candidate.should_not == nil
+    assert @candidate
   end
 
   it 'should report a 9-3 event' do
      events = Event.where(:date => Date.new(2008, 9, 3)..Date.new(2008,9,4))
-     events.size.should == 1
+     assert events
   end
   it 'should report one event for candidate on 9-3' do
      event = @election.event_for(@candidate, Date.new(2008, 9, 3))
-     event.should_not == nil
+     assert event
   end
 
-  it 'should report same event for Gore/Bush on 9-8' do
+  it 'should report same event for Gore/Bush on 9-3' do
      event0 = @election.event_for(@gore, Date.new(2008, 9, 3))
      event1 = @election.event_for(@bush, Date.new(2008, 9, 3))
-     event0.should_not == nil
-     event1.should_not == nil
+     assert event0
+     assert event1
      event0.should == event1
+  end
+
+  it 'should report Caption1 as event triggered by all candidates' do 
+    
+     assert @election.event_for(@bush, Date.new(2008, 9, 1))
+     assert @election.event_for(@gore, Date.new(2008, 9, 1))
+  end
+
+    it 'should report Caption2 as event triggered by Gore' do 
+    
+     @election.event_for(@bush, Date.new(2008, 9, 2)).should == nil
+     assert @election.event_for(@gore, Date.new(2008, 9, 2))
   end
 
 end

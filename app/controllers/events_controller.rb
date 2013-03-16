@@ -80,7 +80,7 @@ class EventsController < ApplicationController
   end
 
   def outcome
-    logger.info("apply outcomes")
+    logger.info("apply outcomes candidate #{params[:candidate_id]} responds #{params[:button]} for event #{params[:event_id]}")
     @event = Event.find(params[:event_id])
     @election = Election.find(@event.election_id) 
   end

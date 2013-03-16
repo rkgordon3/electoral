@@ -45,10 +45,9 @@ class Election < ActiveRecord::Base
 
   #
   # Return event for player on given date
-  def event_for(player, date)
-    next_day = date + 1.day
-    res = events.where(:candidate_id => [ player.id, Candidate.find_by_name("candidate").id]).where(:date => date..next_day)
-    res.size == 1 ? res[0] : res.select { |e| e.candidate_id == player.id }[0]
+  def event_for(candidate, date)
+    results = events.where(:date => date..(date + 1.day))
+    results.where(:candidate_id =>  candidate.id)[0] || results.where(:candidate_id => Candidate.find_by_name("candidate"))[0]
   end
 
   def active_candidates

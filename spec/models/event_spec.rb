@@ -16,4 +16,5 @@ describe "Events" do
      @election.events.last.outcomes_for(Candidate.find_by_name("Gore")).size.should == 2
      @election.events.last.outcomes_for(Candidate.find_by_name("Gore").id).size.should == 2
   end
+
 end

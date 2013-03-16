@@ -1,1 +1,1 @@
-$(<%= "'##{vote_table_id(@election)}'" %>).html(<%= vote_table(@election.active_candidates) %>)
+$('#<%= id_tag_for(@event) %>').popover('hide');
