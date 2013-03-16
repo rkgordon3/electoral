@@ -36,7 +36,7 @@ class EventsController < ApplicationController
   end
 
   # POST /events
-  # POST /events.json
+  # POST /events.json`
   def create
     @event = Event.new(params[:event])
 
@@ -91,6 +91,7 @@ class EventsController < ApplicationController
   def activate
     logger.info("activate for #{params[:candidate_id]} on #{params[:event_id]}")
     @event = Event.find(params[:event_id])
-    respond_with(@election, @event)
+    @candidate = Candidate.find(params[:candidate_id])
+    respond_with(@candidate, @event)
   end
 end

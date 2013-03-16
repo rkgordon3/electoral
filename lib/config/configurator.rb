@@ -93,9 +93,11 @@ def persist
         end
         # no triggering response
       when Hash
+        puts "*****Outcomes for #{candy} for #{event.name}"
         outcomes_for_candy.each_key do |response|
           outcomes_for_response = outcomes_for_candy[response]
           outcomes_for_response.each do |oc|
+            puts "\t\t Response #{response}"
             outc = Outcome.create!(
                           event_id: event.id,
                           delta: oc.rule,

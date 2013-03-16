@@ -43,8 +43,10 @@ class GamesController < ApplicationController
   def create
     @game = Game.new(params[:game])
     
-    @election = Configurator.new(@game.config_file, @game.start_date).persist
+    config = Configurator.new(@game.config_file, @game.start_date)
+    @election = config.persist
 
+   # @game.election = Election.first
     @game.election = @election
     @game.player_states= @election.active_candidates.collect { |c| 
       PlayerState.create!(player_id: c.id, game_id: @game.id, type_of: "Candidate", location: 0 ) }.select{ 

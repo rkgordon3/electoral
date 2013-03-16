@@ -6,15 +6,20 @@ include States
 
 describe "Persistence" do
   before(:all) {
-    @election = Configurator.new("pres2008", "11/2/2008")
-    @election.persist
-    @events = @election.events
+    config = Configurator.new("pres2008", "11/2/2008")
+    config.persist
+  
 
     @election_model = Election.first
   }
 
   it "should create a single Election" do
     Election.all.size.should == 1
+  end
+
+  it "should find two candidates" do 
+    Candidate.find_by_name("Gore").should_not == nil
+    Candidate.find_by_name("Bush").should_not == nil
   end
 
   it "should associate two candidates with Election" do
@@ -59,7 +64,12 @@ describe "Persistence" do
     event = Event.find_by_name("Caption4")
     event.nil?.should == false
     event.outcomes_for("Gore").size == 2
+  end
 
+  it "should have gore with 2 outcomes in Caption6" do
+    event = Event.find_by_name("Caption6")
+    event.nil?.should == false
+    event.outcomes_for("Gore").size == 2
   end
 
 end

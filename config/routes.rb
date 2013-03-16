@@ -17,11 +17,10 @@ Map::Application.routes.draw do
   end
 
   resources :events do
-    get 'outcome'
   end
 
+  match 'event/outcome' => 'events#outcome', :via => :post
   match 'event/activate' => 'events#activate'
-
 
   match '/events/:event_id/:response' => 'events#outcome', :as=> :outcome, :via => :get
 

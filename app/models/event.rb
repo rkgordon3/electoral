@@ -24,11 +24,12 @@ class Event < ActiveRecord::Base
 
   def outcomes_for(name) 
   	case name
-  	when is_a?(String)
-  		outcomes.where(:candidate_id => Candidate.find_by_name(name))
-  	when is_a?(Fixnum)
+  	when Candidate
+  		outcomes.where(:candidate_id => name.id)
+  	when Fixnum
   		outcomes.where(:candidate_id => name)
   	else
+  		outcomes.where(:candidate_id => Candidate.find_by_name(name))
   	end
   end
 
