@@ -24,7 +24,7 @@ module ElectionsHelper
         out =  %Q[<table class="table table-bordered" >]
         out += %Q[<thead><td>Candidate</td><td>Popular Votes</td><td>Electoral Votes</td></tr></thead>]
         candidates.each do |c|
-            out += %Q[<tr><td width='35%'>#{c.name}</td><td>#{c.voting_profiles.collect { |x| x.votes }.reduce(:+)}</td>\
+            out += %Q[<tr><td width="35%">#{c.name}</td><td>#{c.voting_profiles.collect { |x| x.votes }.reduce(:+)}</td>\
                         <td>#{c.electoral_votes}</td>\
                         </tr>]
         end
