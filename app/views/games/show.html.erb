@@ -156,6 +156,7 @@ $('#jCalTarget').jCal({
       $.get(<%= "\'#{election_events_path(@election)}\'" %>, {}, "js" );
     });
 
+
   }
 
   $(function(){
@@ -172,6 +173,7 @@ function handle_move(data) {
               
   for (var i = 0; i < moves.length; i++) {
     player = moves[i].player;
+    player_id = moves[i].player_id;
     token = moves[i].token;
     
     from = moves[i].from;
@@ -205,7 +207,9 @@ function handle_move(data) {
     //$(to_day_id).popover('show'); 
 
     if (moves[i].event > 0) {
-      $.get(<%= "\'#{event_activate_path}\'" %>, { 'candidate' : player, 'event_id' : moves[i].event}, "js");
+      $.get(<%= "\'#{event_activate_path}\'" %>, 
+              { 'candidate_id' : player_id, 'event_id' : moves[i].event}, 
+              "js");
             
     }
 

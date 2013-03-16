@@ -97,16 +97,15 @@ class GamesController < ApplicationController
     game = Game.find(params[:game_id])
     die = params[:die]
     roll_total = die.collect { |v| v.to_i }.sum
-    player = game.player_in_turn
-    name = player.name
-    token = player.image
-    from  = game.location(player)
+    mover = game.player_in_turn
+
+    from  = game.location(mover)
    
-    game.advance(player,roll_total)
-    to = game.location(player)
+    game.advance(mover,roll_total)
+    to = game.location(mover)
 
     landing_date = game.election.campaign_date(to)
-    landing_date_event = game.election.event_for(player, landing_date)
+    landing_date_event = game.election.event_for(mover, landing_date)
     logger.info("landing date event #{landing_date_event.inspect}")
     logger.debug("die0 = #{die[0]}")
     logger.debug("die1 = #{die[1]}")
@@ -115,8 +114,9 @@ class GamesController < ApplicationController
     game.player_in_turn = game.election.active_candidates[turn]
     game.save
     response = move_helper(game.player_in_turn.name, 
-                             [{ :player=> name, 
-                                :token => token,
+                             [{ :player=> mover.name,
+                                :player_id =>  mover.id,
+                                :token => mover.image,
                                 :to => to,
                                 :from => from,
                                 :event=> (landing_date_event.id rescue -1) }])

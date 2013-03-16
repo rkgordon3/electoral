@@ -2,6 +2,7 @@
 	"moves" : <%= move_helper(@game.player_in_turn.name, 
 		@game.election.active_candidates.each.collect do |c|
 			{ :player=> c.name, 
+			  :player_id => c.id,
                     :token => c.image,
                     :to => 0,
                     :event=> -1
