@@ -14,14 +14,14 @@ module EventsHelper
 
   def response_form(candidate, event)
     outcomes = event.outcomes_for(candidate)
-    form_tag(event_outcome_path) do
-      hidden_field_tag('candidate_id', candidate.id)
-      hidden_field_tag('event_id', event.id)
-      outcomes.each do |response|
-        button_tag(response)
-      end
+    form_tag(event_outcome_path) do  	
+      [ hidden_field_tag('candidate_id', candidate.id),
+        hidden_field_tag('event_id', event.id),
+        outcomes.each.collect { |oc| 
+        	button_tag(oc.trigger, :class=>'btn btn-success btn-mini') 
+        }.join("")
+      ].join("<br/>").html_safe
     end
-
   end
 
 	#
