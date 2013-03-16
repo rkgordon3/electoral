@@ -13,7 +13,7 @@ before(:all) {
 	@event2 = @config.event_for_caption("Caption2")
 	@event3 = @config.event_for_caption("Caption3")
 	@event4 = @config.event_for_caption("Caption4")
-  @event5 = @config.event_for_caption("Caption5")
+        @event5 = @config.event_for_caption("Caption5")
 }
   it 'should report five events' do
     @config.events.length.should == 7
@@ -71,8 +71,6 @@ before(:all) {
 
   it "should report yes and no outcomes for Gore in Caption5" do
     goutcomes = @event5.outcomes[:Gore]
-    goutcomes.should have_exactly(1).keys
-    coutcomes = @event5.outcomes[:candidate]
-    coutcomes.should have_exactly(2).keys
+    goutcomes.should have_exactly(2).keys
   end
 end

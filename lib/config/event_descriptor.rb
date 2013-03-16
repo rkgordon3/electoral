@@ -27,6 +27,7 @@ class EventDescriptor
 
   def method_missing(name, *args, &blk)
     merge_outcomes(@outcomes, name, Marshal.load(Marshal.dump(args[0])))
+    @pending = {}
   end
 
   def trigger(name) 
@@ -70,6 +71,12 @@ class EventDescriptor
   private
   def complete
     @outcomes.merge!(@pending)
+    generic_outcomes = @outcomes[:candidate]
+    generic_outcomes.each_pair { |k,v| 
+        @outcomes.each_key { |target|
+           @outcomes[target].reverse_merge!(generic_outcomes)
+        }
+    } if not generic_outcomes.nil?
     self.class.to_s =~ /(.*)Descriptor/
     @event_type = $~[1].downcase
   end
