@@ -8,8 +8,8 @@ module EventsHelper
 	#
 	# Generate HTML id attribute value of a calendar day
 	#
-	def id_tag_for(event) 
-    	"c3d_#{event.date.month}_#{event.date.day}_#{event.date.year}"
+	def id_tag_for(date) 
+    	"c3d_#{date.month}_#{date.day}_#{date.year}"
   end
 
   def response_form(candidate, event)
@@ -45,12 +45,12 @@ module EventsHelper
 		buttons = button_tag("Ok", 
 			       :id=> "#{id_tag_for(event)}b",
 			       :class=>'btn btn-success btn-mini',
-			       :onclick=>"$('##{id_tag_for(event)}').popover('hide');$.get('#{outcome_path(event, "ok")}', { }, 'js');"
+			       :onclick=>"$('##{id_tag_for(event.date)}').popover('hide');$.get('#{outcome_path(event, "ok")}', { }, 'js');"
 			       ).gsub(/'/, "&quot;").gsub(/"/, "'")
 		outcome_form = response_form(candidate, event).gsub(/'/, "&quot;").gsub(/"/, "'")
-    activate = active ?  %Q[$('##{id_tag_for(event)}').popover('show');] : ""
+        activate = active ?  %Q[$('##{id_tag_for(event.date)}').popover('show');] : ""
 		%Q[
-	    $('##{id_tag_for(event)}').popover(
+	    $('##{id_tag_for(event.date)}').popover(
 	    		{ 	html:true,
       			placement:'bottom',
       			trigger: 'click',

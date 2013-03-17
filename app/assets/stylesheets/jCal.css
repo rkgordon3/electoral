@@ -124,7 +124,7 @@
 }
 
 .jCalMo .debate {
-		background-color:hsl(225, 30%, 60%);
+		background-color:hsl(225, 38%, 60%);
 }
 .jCalMo  .event  {
 	background-color:hsl(180, 30%, 60%);
@@ -132,6 +132,10 @@
 
 .jCalMo  .policy  {
 	background-color:hsl(140, 30%, 40%);
+}
+
+.jCalMo  .election_day  {
+	background-color:hsl(127, 53%, 53%);
 }
 
 .jCalMo .event .stumpSpeech {

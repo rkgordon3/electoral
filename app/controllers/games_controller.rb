@@ -45,7 +45,7 @@ class GamesController < ApplicationController
     
     config = Configurator.new(@game.config_file, @game.start_date)
     @election = config.persist
-
+  
    # @game.election = Election.first
     @game.election = @election
     @game.player_states= @election.active_candidates.collect { |c| 

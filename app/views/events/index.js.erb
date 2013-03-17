@@ -1,3 +1,4 @@
 <% @events.each do |event| -%>
-    $("#<%= id_tag_for(event) %>").addClass("<%= event.event_type %>");
-<% end -%>            
+    $("#<%= id_tag_for(event.date) %>").addClass("<%= event.event_type %>");
+<% end -%>         
+$("#<%= id_tag_for(@election.date) %>").addClass('election_day');
