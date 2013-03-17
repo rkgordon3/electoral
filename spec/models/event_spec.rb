@@ -17,4 +17,12 @@ describe "Events" do
      @election.events.last.outcomes_for(Candidate.find_by_name("Gore").id).size.should == 2
   end
 
+  it 'should report one yes outcome for Gore for Caption6' do
+    g = Candidate.find_by_name("Gore")
+    e = Event.find_by_name("Caption6")
+    outcomes = e.outcomes_for(g, "yes")
+    outcomes.size.should == 1
+    
+  end
+
 end

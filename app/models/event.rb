@@ -22,7 +22,14 @@ class Event < ActiveRecord::Base
   belongs_to :election
   belongs_to :trigger_candidate, class_name: "Candidate", foreign_key: :candidate_id
 
-  def outcomes_for(name) 
+  #
+  # Return all outcomes for this event for a candidate. name
+  # may be either a string, a Candidate or an id.
+  #
+  # If response is supplied, results are filtered to that
+  # value
+  #
+  def outcomes_for(name, response = nil) 
     result = nil
   	case name
   	when Candidate
@@ -32,8 +39,9 @@ class Event < ActiveRecord::Base
   	else
   		result = outcomes.where(:candidate_id => Candidate.find_by_name(name))
   	end
-    result || outcomes.where(:name => "candidate")
-
+    result = result || outcomes.where(:name => "candidate")
+    result = result.where(:trigger=>response) unless response.nil?
+    result
   end
 
 

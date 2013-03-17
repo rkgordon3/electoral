@@ -79,10 +79,16 @@ class EventsController < ApplicationController
     end
   end
 
+  #
+  # Process response, apply outcome
   def outcome
     logger.info("apply outcomes candidate #{params[:candidate_id]} responds #{params[:button]} for event #{params[:event_id]}")
     @event = Event.find(params[:event_id])
+    @candidate = Candidate.find(params[:candidate_id])
+    # vote_table in response needs @election
     @election = Election.find(@event.election_id) 
+    outcome = @event.outcomes_for(@candidate, params[:button]).first
+    outcome.apply(@candidate)
   end
 
   #

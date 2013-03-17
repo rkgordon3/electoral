@@ -17,6 +17,13 @@ class Outcome < ActiveRecord::Base
   belongs_to :event
   has_many :demographics
 
-  def apply
+
+  def apply(candidate)
+  	demographics.each do |d|
+  		demo = d.type_of.constantize.find(d.value_id)
+  		profile = candidate.profile_for(demo)
+  		profile.votes += profile.votes * (delta/100.0)
+  		profile.save
+    end
   end
 end
