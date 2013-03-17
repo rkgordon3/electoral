@@ -26,7 +26,8 @@ class GamesController < ApplicationController
   # GET /games/new.json
   def new
     @game = Game.new
-
+    d = Dir.new("./lib/config/elections")
+    @config_dirs =  d.each.select { |f| File.directory?(File.join(d.path,f)) && f =~ /\w+/ }
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @game }

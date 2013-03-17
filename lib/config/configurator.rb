@@ -16,6 +16,7 @@ include Candidates
 attr_reader :events
 
 def initialize(name, date)
+  puts "configure #{name} for date #{date}"
   @date = date.is_a?(String) ? date.to_date : date
   @name = name
   @events = []
@@ -25,6 +26,7 @@ end
 
 
 def describe event, &blk
+  puts "describe #{event.name}"
    event.instance_eval &blk
    event.send "complete"
    add_event event
@@ -77,6 +79,7 @@ def persist
       case outcomes_for_candy
         
       when Array
+        puts "array outcome for #{candy} : #{outcomes_for_candy.inspect}"
         outcomes_for_candy.each do |oc|
           outc = Outcome.create!(
                           event_id: event.id,

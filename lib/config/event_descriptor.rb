@@ -26,6 +26,7 @@ class EventDescriptor
   end
 
   def method_missing(name, *args, &blk)
+    puts "merging #{name} with args #{args.inspect}"
     merge_outcomes(@outcomes, name, Marshal.load(Marshal.dump(args[0])))
     @pending = {}
   end
@@ -64,8 +65,15 @@ class EventDescriptor
   protected
 
   def merge_outcomes(hash, name, args) 
+    puts "for #{name} merge #{args.inspect} of type #{args.class} into #{hash} of type #{hash.class}"
     csym = name.to_sym
-    hash[csym] = hash[csym].nil? ? args : hash[csym].merge!(args)     
+    case args
+    when Hash
+      hash[csym] = hash[csym].nil? ? args : hash[csym].merge!(args)     
+    when Array 
+      hash[csym] = hash[csym].nil? ? args : hash[csym]<<args[0]
+    else
+    end
   end
 
   private

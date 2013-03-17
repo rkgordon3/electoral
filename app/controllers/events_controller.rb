@@ -87,7 +87,7 @@ class EventsController < ApplicationController
     @candidate = Candidate.find(params[:candidate_id])
     # vote_table in response needs @election
     @election = Election.find(@event.election_id) 
-    outcome = @event.outcomes_for(@candidate, params[:button]).first
+    outcome = @event.outcomes_for(@candidate, (params[:button] unless params[:button].blank?)).first
     outcome.apply(@candidate)
   end
 

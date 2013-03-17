@@ -28,7 +28,7 @@ describe policy "Caption4" do
   Bush responds no outcome +50, [AR, AZ, FL]
 end
 
-describe policy "Caption5" do
+describe event "Caption5" do
   date "9/5/2008"
   description "A caption 5 event"
   Gore responds yes outcome +50, [AR, AZ, FL]
