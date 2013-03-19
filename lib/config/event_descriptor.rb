@@ -16,7 +16,6 @@ class EventDescriptor
   attr_accessor :candidate
   attr_accessor :event_date
   attr_reader :event_description
-  attr_accessor :event_type
 
   def initialize(caption = nil) 
     @caption = caption
@@ -24,10 +23,15 @@ class EventDescriptor
     @outcomes = {}
     @candidate = :candidate
   end
-
   def method_missing(name, *args, &blk)
-    puts "merging #{name} with args #{args.inspect}"
-    merge_outcomes(@outcomes, name, Marshal.load(Marshal.dump(args[0])))
+    puts "mm=============> #{name}"
+ 
+    if name.to_s == "responds"
+      raise ArgumentError.new(message: "responds can not appear within a generic event.")
+    else
+      #puts "merging #{name} with args #{args.inspect}"
+      merge_outcomes(@outcomes, name, Marshal.load(Marshal.dump(args[0])))
+    end
     @pending = {}
   end
 
@@ -65,7 +69,7 @@ class EventDescriptor
   protected
 
   def merge_outcomes(hash, name, args) 
-    puts "for #{name} merge #{args.inspect} of type #{args.class} into #{hash} of type #{hash.class}"
+    #puts "for #{name} merge #{args.inspect} of type #{args.class} into #{hash} of type #{hash.class}"
     csym = name.to_sym
     case args
     when Hash
@@ -79,7 +83,7 @@ class EventDescriptor
   private
   def complete
     @outcomes.merge!(@pending)
-    puts "outcomes for #{event_date} #{@outcomes.inspect}"
+    #puts "outcomes for #{event_date} #{@outcomes.inspect}"
     generic_outcomes = @outcomes[:candidate]
     generic_outcomes.each_pair { |k,v| 
 

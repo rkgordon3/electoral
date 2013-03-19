@@ -65,7 +65,7 @@ def persist
   Profiles.populate(election, hash)
 
   @events.each { |e| 
-   
+    puts "Loading event #{e.caption}"
     event = Event.create!(date: e.event_date, 
                       name: e.caption,
                       description: e.event_description,
