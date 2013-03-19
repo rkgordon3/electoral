@@ -15,10 +15,8 @@ include Candidates
 
 attr_reader :events
 
-
-swing_states = [AL, AK, IL, NJ]
-
 def initialize(name, date)
+  puts "configure #{name} for date #{date}"
   @date = date.is_a?(String) ? date.to_date : date
   @name = name
   @events = []
@@ -28,6 +26,7 @@ end
 
 
 def describe event, &blk
+  puts "describe #{event.name}"
    event.instance_eval &blk
    event.send "complete"
    add_event event
@@ -62,7 +61,7 @@ def persist
     i += 1
   }
 
-  hash = Candidate.where(["election_id = ?", election.id]).index_by(&:name)
+  hash = Candidate.where(["election_id = ?", election.id]).where(["name != ?", "candidate"]).index_by(&:name)
   Profiles.populate(election, hash)
 
   @events.each { |e| 
@@ -80,6 +79,7 @@ def persist
       case outcomes_for_candy
         
       when Array
+        puts "array outcome for #{candy} : #{outcomes_for_candy.inspect}"
         outcomes_for_candy.each do |oc|
           outc = Outcome.create!(
                           event_id: event.id,

@@ -8,21 +8,21 @@ module EventsHelper
 	#
 	# Generate HTML id attribute value of a calendar day
 	#
-	def id_tag_for(event) 
-    	"c3d_#{event.date.month}_#{event.date.day}_#{event.date.year}"
+	def id_tag_for(date) 
+    	"c3d_#{date.month}_#{date.day}_#{date.year}"
   end
 
   def response_form(candidate, event)
-    class_map = { yes: "success", no: "danger"}
-    outcomes = event.outcomes_for(candidate)
+    class_map = { yes: "success", no: "danger", ok: "success"}
+    triggers = event.outcomes_for(candidate).collect { |o| o.trigger }.uniq
 
     form_tag(event_outcome_path, :remote=>true) do  	
       [ hidden_field_tag('candidate_id', candidate.id),
         hidden_field_tag('event_id', event.id),
-        outcomes.each.collect { |oc| 
-          trigger = oc.trigger || "Ok"
-        	button_tag(oc.trigger, 
-                       :class=>"btn btn-#{class_map[oc.trigger.downcase.to_sym]} btn-mini",
+        triggers.each.collect { |trigger| 
+          trigger_display = trigger || "Ok"
+        	button_tag(trigger_display, 
+                       :class=>"btn btn-#{class_map[trigger_display.downcase.to_sym]} btn-mini",
                        :value=> trigger) 
         }.join("")
       ].join("<br/>").html_safe
@@ -43,14 +43,14 @@ module EventsHelper
 	#
 	def popover_tag(candidate, event, active = false)
 		buttons = button_tag("Ok", 
-			       :id=> "#{id_tag_for(event)}b",
+			       :id=> "#{id_tag_for(event.date)}b",
 			       :class=>'btn btn-success btn-mini',
-			       :onclick=>"$('##{id_tag_for(event)}').popover('hide');$.get('#{outcome_path(event, "ok")}', { }, 'js');"
+			       :onclick=>"$('##{id_tag_for(event.date)}').popover('hide');$.get('#{outcome_path(event, "ok")}', { }, 'js');"
 			       ).gsub(/'/, "&quot;").gsub(/"/, "'")
 		outcome_form = response_form(candidate, event).gsub(/'/, "&quot;").gsub(/"/, "'")
-    activate = active ?  %Q[$('##{id_tag_for(event)}').popover('show');] : ""
+        activate = active ?  %Q[$('##{id_tag_for(event.date)}').popover('show');] : ""
 		%Q[
-	    $('##{id_tag_for(event)}').popover(
+	    	$('##{id_tag_for(event.date)}').popover(
 	    		{ 	html:true,
       			placement:'bottom',
       			trigger: 'click',
@@ -59,9 +59,9 @@ module EventsHelper
       				return "<span>#{event.description}</span><br/>#{outcome_form}";
       			}
 			}
-      );
-    #{activate}
+      	);
+    	#{activate}
   
-  	].html_safe
+  		].html_safe
   end
 end

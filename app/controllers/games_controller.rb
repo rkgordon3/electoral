@@ -26,7 +26,8 @@ class GamesController < ApplicationController
   # GET /games/new.json
   def new
     @game = Game.new
-
+    d = Dir.new("./lib/config/elections")
+    @config_dirs =  d.each.select { |f| File.directory?(File.join(d.path,f)) && f =~ /\w+/ }
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @game }
@@ -45,7 +46,7 @@ class GamesController < ApplicationController
     
     config = Configurator.new(@game.config_file, @game.start_date)
     @election = config.persist
-
+  
    # @game.election = Election.first
     @game.election = @election
     @game.player_states= @election.active_candidates.collect { |c| 
