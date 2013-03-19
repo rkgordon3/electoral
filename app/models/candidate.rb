@@ -23,8 +23,12 @@ class Candidate < ActiveRecord::Base
   	State.all.select { |s| s.winner==self}.collect { |s| s.electoral_votes }.sum
   end
 
-  def profile_for(state) 
-  	voting_profiles.each.select { |p| p.state_id == state.id }[0]
+  def profile_for(demographic) 
+  	voting_profiles.each.select { |p| p.state_id == demographic.id }[0]
+  end
+
+  def votes
+    voting_profiles.collect { |x| x.votes }.reduce(:+)
   end
 
 end

@@ -88,7 +88,7 @@ class EventsController < ApplicationController
     # vote_table in response needs @election
     @election = Election.find(@event.election_id) 
     outcome = @event.outcomes_for(@candidate, params[:button]).first
-    outcome.apply(@candidate)
+    outcome.apply
   end
 
   #

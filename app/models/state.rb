@@ -16,7 +16,6 @@ class State < ActiveRecord::Base
   validates :abbrev, length: { :maximum => 2, :minimum => 2 }
   attr_accessible :abbrev, :electoral_votes, :name, :population
   has_many :voting_profiles
-
   def state_tag
   	"US-" + abbrev
   end

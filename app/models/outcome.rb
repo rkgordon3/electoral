@@ -18,10 +18,10 @@ class Outcome < ActiveRecord::Base
   has_many :demographics
 
 
-  def apply(candidate)
+  def apply_it
   	demographics.each do |d|
   		demo = d.type_of.constantize.find(d.value_id)
-  		profile = candidate.profile_for(demo)
+      profile = candidate.profile_for(demo)
   		profile.votes += profile.votes * (delta/100.0)
   		profile.save
     end
