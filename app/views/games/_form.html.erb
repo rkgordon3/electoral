@@ -19,7 +19,7 @@
     <%= f.select :config_file, @config_dirs, {}, :class=>'config_select' %>
   </div>
   <div class="field">
-    <%= f.label :start_date %><br />
+    <%= f.label "Date of Election" %><br />
     <%= f.date_select :start_date, 
             { :default => {:year => 2008, :month => 11, :day => 4},
               :use_short_month=>true },
