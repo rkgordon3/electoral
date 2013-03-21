@@ -15,8 +15,8 @@ class EventDescriptor
   attr_reader :pending
   attr_accessor :candidate
   attr_accessor :event_date
-  attr_reader :event_type
   attr_reader :event_description
+  attr_reader :event_type
 
   def initialize(caption = nil) 
     @caption = caption
