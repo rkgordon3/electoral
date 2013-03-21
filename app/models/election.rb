@@ -21,7 +21,10 @@ class Election < ActiveRecord::Base
   belongs_to :game
 
   attr_reader :start_date
-
+  #
+  # Start date of campaign cycle is 1st of months, two months before month
+  # of election. 
+  #
   def start_date
   	@start_date ||= Date.new(date.year, date.month-2, 1)
   end
@@ -31,6 +34,13 @@ class Election < ActiveRecord::Base
   #
   def campaign_date(to)
     start_date + to.days
+  end
+
+  #
+  # Number of days in campaign
+  #
+  def campaign_length
+    (self.date - self.start_date).to_i
   end
 
   #

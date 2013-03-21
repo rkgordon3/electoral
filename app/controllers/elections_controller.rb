@@ -1,4 +1,6 @@
 class ElectionsController < ApplicationController
+
+  respond_to :js, :html
   # GET /elections
   # GET /elections.json
   def index
@@ -79,5 +81,11 @@ class ElectionsController < ApplicationController
       format.html { redirect_to elections_url }
       format.json { head :no_content }
     end
+  end
+
+
+  def update_vote_table
+    @election = Election.find(params[:id])
+    respond_with(@election)
   end
 end

@@ -10,6 +10,7 @@
 #  start_date   :date
 #  candidate_id :integer
 #  current_turn :integer         default(0)
+#  max_position :integer
 #
 
 require 'spec_helper'
@@ -50,5 +51,19 @@ describe Game do
   	@game.advance(p, 5)
   	@game.location(p).should == loc + 5
   end
+
+  it 'should report game over' do 
+  	@game.max_position = 1
+  	@game.save
+  	p = @game.player_in_turn
+  	loc = @game.location(p)
+  	@game.advance(p, 5)
+  	@game.next_turn
+  	p = @game.player_in_turn
+  	loc = @game.location(p)
+  	@game.advance(p, 5)
+  	@game.over?.should == true
+  end
+
 
 end

@@ -135,7 +135,8 @@
 }
 
 .jCalMo  .election_day  {
-	background-color:hsla(25, 100%, 50%,0.75);
+	/* background-color:hsla(25, 100%, 50%,0.75); */
+	background-image:url('small-flag.png');
 }
 
 .jCalMo .event .stumpSpeech {

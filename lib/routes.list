@@ -1,0 +1,54 @@
+                           games GET    /games(.:format)                                                   games#index
+                                 POST   /games(.:format)                                                   games#create
+                        new_game GET    /games/new(.:format)                                               games#new
+                       edit_game GET    /games/:id/edit(.:format)                                          games#edit
+                            game GET    /games/:id(.:format)                                               games#show
+                                 PUT    /games/:id(.:format)                                               games#update
+                                 DELETE /games/:id(.:format)                                               games#destroy
+                 election_events GET    /elections/:election_id/events(.:format)                           events#index
+                                 POST   /elections/:election_id/events(.:format)                           events#create
+              new_election_event GET    /elections/:election_id/events/new(.:format)                       events#new
+             edit_election_event GET    /elections/:election_id/events/:id/edit(.:format)                  events#edit
+                  election_event GET    /elections/:election_id/events/:id(.:format)                       events#show
+                                 PUT    /elections/:election_id/events/:id(.:format)                       events#update
+                                 DELETE /elections/:election_id/events/:id(.:format)                       events#destroy
+             election_candidates GET    /elections/:election_id/candidates(.:format)                       candidates#index
+                                 POST   /elections/:election_id/candidates(.:format)                       candidates#create
+          new_election_candidate GET    /elections/:election_id/candidates/new(.:format)                   candidates#new
+         edit_election_candidate GET    /elections/:election_id/candidates/:id/edit(.:format)              candidates#edit
+              election_candidate GET    /elections/:election_id/candidates/:id(.:format)                   candidates#show
+                                 PUT    /elections/:election_id/candidates/:id(.:format)                   candidates#update
+                                 DELETE /elections/:election_id/candidates/:id(.:format)                   candidates#destroy
+                       elections GET    /elections(.:format)                                               elections#index
+                                 POST   /elections(.:format)                                               elections#create
+                    new_election GET    /elections/new(.:format)                                           elections#new
+                   edit_election GET    /elections/:id/edit(.:format)                                      elections#edit
+                        election GET    /elections/:id(.:format)                                           elections#show
+                                 PUT    /elections/:id(.:format)                                           elections#update
+                                 DELETE /elections/:id(.:format)                                           elections#destroy
+                       maps_show GET    /maps/show(.:format)                                               maps#show
+      game_session_player_states GET    /game_sessions/:game_session_id/player_states(.:format)            player_states#index
+                                 POST   /game_sessions/:game_session_id/player_states(.:format)            player_states#create
+   new_game_session_player_state GET    /game_sessions/:game_session_id/player_states/new(.:format)        player_states#new
+  edit_game_session_player_state GET    /game_sessions/:game_session_id/player_states/:id/edit(.:format)   player_states#edit
+       game_session_player_state GET    /game_sessions/:game_session_id/player_states/:id(.:format)        player_states#show
+                                 PUT    /game_sessions/:game_session_id/player_states/:id(.:format)        player_states#update
+                                 DELETE /game_sessions/:game_session_id/player_states/:id(.:format)        player_states#destroy
+    game_session_voting_profiles GET    /game_sessions/:game_session_id/voting_profiles(.:format)          voting_profiles#index
+                                 POST   /game_sessions/:game_session_id/voting_profiles(.:format)          voting_profiles#create
+ new_game_session_voting_profile GET    /game_sessions/:game_session_id/voting_profiles/new(.:format)      voting_profiles#new
+edit_game_session_voting_profile GET    /game_sessions/:game_session_id/voting_profiles/:id/edit(.:format) voting_profiles#edit
+     game_session_voting_profile GET    /game_sessions/:game_session_id/voting_profiles/:id(.:format)      voting_profiles#show
+                                 PUT    /game_sessions/:game_session_id/voting_profiles/:id(.:format)      voting_profiles#update
+                                 DELETE /game_sessions/:game_session_id/voting_profiles/:id(.:format)      voting_profiles#destroy
+               game_session_roll POST   /game_sessions/:game_session_id/roll(.:format)                     game_sessions#roll
+              game_session_reset GET    /game_sessions/:game_session_id/reset(.:format)                    game_sessions#reset
+            game_session_players GET    /game_sessions/:game_session_id/players(.:format)                  game_sessions#players
+                   game_sessions GET    /game_sessions(.:format)                                           game_sessions#index
+                                 POST   /game_sessions(.:format)                                           game_sessions#create
+                new_game_session GET    /game_sessions/new(.:format)                                       game_sessions#new
+               edit_game_session GET    /game_sessions/:id/edit(.:format)                                  game_sessions#edit
+                    game_session GET    /game_sessions/:id(.:format)                                       game_sessions#show
+                                 PUT    /game_sessions/:id(.:format)                                       game_sessions#update
+                                 DELETE /game_sessions/:id(.:format)                                       game_sessions#destroy
+                            root        /                                                                  maps#show

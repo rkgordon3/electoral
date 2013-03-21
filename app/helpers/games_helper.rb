@@ -26,9 +26,11 @@ module GamesHelper
 		percent_diff_map.to_json.html_safe
 	end
 
-	def move_helper(tomove_name, moves) 
+	def move_helper(tomove_name, game_over_flag, moves) 
 		{  :player_in_turn => tomove_name, 
-           :moves => moves
+           :moves => moves,
+           :game_over => game_over_flag
         }
     end
+
 end

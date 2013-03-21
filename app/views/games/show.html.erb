@@ -32,10 +32,25 @@
   </div>
 </div>
 
+<div id='game-over-modal' class='modal hide fade'
+  role="dialog" aria-labelledby="results-modal-label" aria-hidden="true">
+  <div class='modal-header' >
+    <button type="button" 
+            class="close" 
+            data-dismiss="modal" 
+            aria-hidden="true">×</button>
+    <h3 id='results-modal-label'>Election Results</h3>
+  </div>
+  <div id='game-over-modal-body' class='modal-body' >
+  </div>
+</div>
+
 
 
   <script>
-
+ $('#game-over-modal').on('show', function () {
+      $.get('<%= update_vote_table_election_path(@election) %>', {}, "js"); 
+  });
 
    function recolor_handler(data){
       var mapObject = $('#us-map').vectorMap('get', 'mapObject');
@@ -166,6 +181,8 @@ $('#jCalTarget').jCal({
 
 function handle_move(data) {
   date_str = <%= "\'#{@election.start_date.to_s}\';" %>
+
+
   date_parts = date_str.split("-");
   start_date = new Date(date_parts[0], date_parts[1]-1, date_parts[2]);
 
@@ -213,6 +230,9 @@ function handle_move(data) {
             
     }
 
+  }
+  if (data.game_over == true) {
+    $('#game-over-modal').modal('show');
   }
 }
 

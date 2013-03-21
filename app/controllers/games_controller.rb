@@ -126,12 +126,13 @@ class GamesController < ApplicationController
     game.next_turn
     game.save
 
-    response = move_helper(game.player_in_turn.name, 
-                             [{ :player=> mover.name,
-                                :player_id =>  mover.id,
-                                :token => mover.image,
-                                :to => to,
-                                :from => from,
-                                :event=> (landing_date_event.id rescue -1) }])
+    move_helper(game.player_in_turn.name, game.over?,
+                     [{ 
+                        :player=> mover.name,
+                        :player_id =>  mover.id,
+                        :token => mover.image,
+                        :to => to,
+                        :from => from,
+                        :event=> (landing_date_event.id rescue -1) }])
   end
 end

@@ -12,6 +12,9 @@ Map::Application.routes.draw do
   end
 
   resources :elections do
+    member do 
+      get :update_vote_table
+    end
     resources :events
     resources :candidates
   end

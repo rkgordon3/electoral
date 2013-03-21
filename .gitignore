@@ -15,8 +15,7 @@
 /tmp
 
 *.*.swp
-routes.list
-routes.lit
+routes.*
 t.html
 tb.rb
 rails.log

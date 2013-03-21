@@ -10,17 +10,18 @@
 #  start_date   :date
 #  candidate_id :integer
 #  current_turn :integer         default(0)
+#  max_position :integer
 #
 
 class Game < ActiveRecord::Base
   attr_accessible :config_file, :start_date
   belongs_to :election
-  has_many   :player_states
+  has_many   :player_states, autosave: :true
   belongs_to :player_in_turn, class_name: "Candidate", foreign_key: :candidate_id
   
   def advance(player, steps)
     s = state_for(player)
-  	s.location += steps
+    s.location = [self.max_position, s.location + steps].min
     s.save
   end
 
@@ -33,18 +34,20 @@ class Game < ActiveRecord::Base
   end
 
   def next_turn
-    puts "switching turn form #{self.current_turn} witn #{player_states.size} players"
     self.current_turn = (self.current_turn + 1) % player_states.size
-    puts "+++++++ setting #{self.election.active_candidates[self.current_turn].name} in turn at #{self.current_turn}"
     self.player_in_turn = self.election.active_candidates[self.current_turn]
   end
 
   def setup(an_election)
-   # @game.election = Election.first
     self.election = an_election
     an_election.active_candidates.collect { |c| 
       player_states.build(player_id: c.id, type_of: c.class.to_s)
     } 
+    self.max_position = an_election.campaign_length
     self.player_in_turn = self.election.active_candidates[0]
+  end
+
+  def over?
+     player_states.select { |p| p.location == self.max_position }.size == player_states.size
   end
 end

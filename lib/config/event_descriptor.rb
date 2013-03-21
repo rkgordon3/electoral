@@ -29,7 +29,6 @@ class EventDescriptor
     if name.to_s == "responds"
       raise ArgumentError.new(message: "responds can not appear within a generic event.")
     else
-      #puts "merging #{name} with args #{args.inspect}"
       merge_outcomes(@outcomes, name, Marshal.load(Marshal.dump(args[0])))
     end
     @pending = {}
@@ -88,7 +87,6 @@ class EventDescriptor
     generic_outcomes.each_pair { |k,v| 
 
         @outcomes.each_key { |target|
-           puts "merging default in #{target}"
            @outcomes[target].reverse_merge!(generic_outcomes)
         }
     } unless generic_outcomes.nil?

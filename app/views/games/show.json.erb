@@ -1,5 +1,5 @@
 {
-	"moves" : <%= move_helper(@game.player_in_turn.name, 
+	"moves" : <%= move_helper(@game.player_in_turn.name, false,
 		@game.election.active_candidates.each.collect do |c|
 			{ :player=> c.name, 
 			  :player_id => c.id,

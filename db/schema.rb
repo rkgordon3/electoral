@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130321171240) do
+ActiveRecord::Schema.define(:version => 20130321180516) do
 
   create_table "candidates", :force => true do |t|
     t.string   "name"
@@ -66,6 +66,7 @@ ActiveRecord::Schema.define(:version => 20130321171240) do
     t.date     "start_date"
     t.integer  "candidate_id"
     t.integer  "current_turn", :default => 0
+    t.integer  "max_position"
   end
 
   create_table "outcomes", :force => true do |t|
