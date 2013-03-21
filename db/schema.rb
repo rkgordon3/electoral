@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130313162723) do
+ActiveRecord::Schema.define(:version => 20130321171240) do
 
   create_table "candidates", :force => true do |t|
     t.string   "name"
@@ -60,11 +60,12 @@ ActiveRecord::Schema.define(:version => 20130313162723) do
 
   create_table "games", :force => true do |t|
     t.integer  "election_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
     t.string   "config_file"
     t.date     "start_date"
     t.integer  "candidate_id"
+    t.integer  "current_turn", :default => 0
   end
 
   create_table "outcomes", :force => true do |t|
@@ -85,9 +86,9 @@ ActiveRecord::Schema.define(:version => 20130313162723) do
   create_table "player_states", :force => true do |t|
     t.integer  "game_id"
     t.integer  "player_id"
-    t.integer  "location"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.integer  "location",   :default => 0
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
     t.string   "type_of"
   end
 

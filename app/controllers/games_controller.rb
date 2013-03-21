@@ -46,14 +46,8 @@ class GamesController < ApplicationController
     
     config = Configurator.new(@game.config_file, @game.start_date)
     @election = config.persist
-  
-   # @game.election = Election.first
-    @game.election = @election
-    @game.player_states= @election.active_candidates.collect { |c| 
-      PlayerState.create!(player_id: c.id, game_id: @game.id, type_of: "Candidate", location: 0 ) }.select{ 
-        |p| !p.nil?
-    }
-    @game.player_in_turn = @election.active_candidates[0]
+    @game.setup(@election)
+ 
 
     respond_to do |format|
       if @game.save
@@ -99,9 +93,8 @@ class GamesController < ApplicationController
   def roll
     game = Game.find(params[:game_id])
     die = params[:die]
-     roll_total = die.collect { |v| v.to_i }.sum
+    roll_total = die.collect { |v| v.to_i }.sum
     response = do_move(game, roll_total)
-
 
     respond_to do |format|
       format.json { render json: response }
@@ -130,12 +123,7 @@ class GamesController < ApplicationController
 
     landing_date = game.election.campaign_date(to)
     landing_date_event = game.election.event_for(mover, landing_date)
-    logger.info("landing date event #{landing_date_event.inspect}")
-    logger.debug("die0 = #{die[0]}")
-    logger.debug("die1 = #{die[1]}")
-    turn = game.next_turn
-    logger.debug("*******turn  #{turn}")
-    game.player_in_turn = game.election.active_candidates[turn]
+    game.next_turn
     game.save
 
     response = move_helper(game.player_in_turn.name, 

@@ -24,6 +24,9 @@ describe Election do
     @election.should_not == nil
   end
 
+  it 'should have 2 active candidates' do 
+    @election.active_candidates.size.should == 2
+  end
 
   it 'should report one event for Bush on 9-1' do
      event = @election.event_for(@bush, Date.new(2008, 9, 1))
