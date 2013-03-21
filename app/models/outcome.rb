@@ -18,7 +18,7 @@ class Outcome < ActiveRecord::Base
   has_many :demographics
 
 
-  def apply_it
+  def apply
   	demographics.each do |d|
   		demo = d.type_of.constantize.find(d.value_id)
       profile = candidate.profile_for(demo)
