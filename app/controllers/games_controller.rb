@@ -99,30 +99,9 @@ class GamesController < ApplicationController
   def roll
     game = Game.find(params[:game_id])
     die = params[:die]
-    roll_total = die.collect { |v| v.to_i }.sum
-    mover = game.player_in_turn
+     roll_total = die.collect { |v| v.to_i }.sum
+    response = do_move(game, roll_total)
 
-    from  = game.location(mover)
-   
-    game.advance(mover,roll_total)
-    to = game.location(mover)
-
-    landing_date = game.election.campaign_date(to)
-    landing_date_event = game.election.event_for(mover, landing_date)
-    logger.info("landing date event #{landing_date_event.inspect}")
-    logger.debug("die0 = #{die[0]}")
-    logger.debug("die1 = #{die[1]}")
-    turn = game.next_turn
-    logger.debug("*******turn  #{turn}")
-    game.player_in_turn = game.election.active_candidates[turn]
-    game.save
-    response = move_helper(game.player_in_turn.name, 
-                             [{ :player=> mover.name,
-                                :player_id =>  mover.id,
-                                :token => mover.image,
-                                :to => to,
-                                :from => from,
-                                :event=> (landing_date_event.id rescue -1) }])
 
     respond_to do |format|
       format.json { render json: response }
@@ -139,5 +118,32 @@ class GamesController < ApplicationController
     @game.player_in_turn = @game.election.active_candidates[0]
     @game.save
     redirect_to game_path(@game)
+  end
+
+  def do_move(game, roll_total) 
+    mover = game.player_in_turn
+
+    from  = game.location(mover)
+   
+    game.advance(mover,roll_total)
+    to = game.location(mover)
+
+    landing_date = game.election.campaign_date(to)
+    landing_date_event = game.election.event_for(mover, landing_date)
+    logger.info("landing date event #{landing_date_event.inspect}")
+    logger.debug("die0 = #{die[0]}")
+    logger.debug("die1 = #{die[1]}")
+    turn = game.next_turn
+    logger.debug("*******turn  #{turn}")
+    game.player_in_turn = game.election.active_candidates[turn]
+    game.save
+
+    response = move_helper(game.player_in_turn.name, 
+                             [{ :player=> mover.name,
+                                :player_id =>  mover.id,
+                                :token => mover.image,
+                                :to => to,
+                                :from => from,
+                                :event=> (landing_date_event.id rescue -1) }])
   end
 end

@@ -25,7 +25,6 @@ class EventDescriptor
     @candidate = :candidate
   end
   def method_missing(name, *args, &blk)
-    puts "mm=============> #{name}"
  
     if name.to_s == "responds"
       raise ArgumentError.new(message: "responds can not appear within a generic event.")
