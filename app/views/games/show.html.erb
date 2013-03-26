@@ -222,7 +222,8 @@ function handle_move(data) {
                  +token
                  +"'></i></div>");
     //$(to_day_id).popover('show'); 
-
+    // If move landing has an associated event,
+    // request popover for it.
     if (moves[i].event > 0) {
       $.get(<%= "\'#{event_activate_path}\'" %>, 
               { 'candidate_id' : player_id, 'event_id' : moves[i].event}, 

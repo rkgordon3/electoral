@@ -25,10 +25,11 @@ class EventDescriptor
     @candidate = :candidate
   end
   def method_missing(name, *args, &blk)
- 
+    return if args.empty?
     if name.to_s == "responds"
       raise ArgumentError.new(message: "responds can not appear within a generic event.")
     else
+      raise ArgumentError.new(message: "Missing outcome for #{name} in #{caption} event args=#{args[0].inspect}") unless args[0][0].is_a? OutcomeDescriptor
       merge_outcomes(@outcomes, name, Marshal.load(Marshal.dump(args[0])))
     end
     @pending = {}

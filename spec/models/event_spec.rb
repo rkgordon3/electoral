@@ -42,4 +42,16 @@ describe "Events" do
     
   end
 
+  it 'should have one outcome for Gore for event Caption1' do 
+    e = Event.find_by_name("Caption1")
+    e.outcomes_for(Candidate.find_by_name("Gore")).size.should == 1
+    e.outcomes_for(Candidate.find_by_name("Bush")).size.should == 1
+  end
+
+  it 'should have one event for Bush on 9/1' do 
+    landing = @election.campaign_date(0)
+    assert landing
+    event = @election.event_for(bush, landing)
+    assert event
+
 end

@@ -26,6 +26,7 @@ class Election < ActiveRecord::Base
   # of election. 
   #
   def start_date
+    puts "@@@@@@ #{date.year} #{date.month}"
   	@start_date ||= Date.new(date.year, date.month-2, 1)
   end
   #
@@ -52,6 +53,10 @@ class Election < ActiveRecord::Base
 
   def active_candidates
     candidates.select { |c| c.name != "candidate" }
+  end
+
+  def candidate_for(name) 
+    candidates.where("name = ?", name).first
   end
 
 end

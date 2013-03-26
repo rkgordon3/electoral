@@ -5,8 +5,10 @@ module ApplicationHelper
 		out = ""
 		out += javascript_tag (%Q[function roll(elem) {
 			val0 = Math.floor((Math.random()*6)+1);
+			val0 = 2;
 			$("#die0_label").html(val0);
   			val1 = Math.floor((Math.random()*6)+1);
+  			val1 = 2;
   			$("#die1_label").html(val1);
   			$.post("/#{param_hash[:controller]}/#{game.id}/#{param_hash[:action]}", 
   				       { 'die[]' : [val0, val1] }, 
