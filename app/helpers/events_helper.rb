@@ -1,5 +1,6 @@
 module EventsHelper
 	include Rails.application.routes.url_helpers 
+	require 'string.rb'
   include 
 	def location_select
 		collection_select(:event, :location_id, State.all, :id, :name)
@@ -15,7 +16,7 @@ module EventsHelper
   def response_form(candidate, event)
     class_map = { yes: "success", no: "danger", ok: "success"}
     triggers = event.outcomes_for(candidate).collect { |o| o.trigger }.uniq
-
+    triggers = ["Ok"] if triggers.empty?
     form_tag(event_outcome_path, :remote=>true) do  	
       [ hidden_field_tag('candidate_id', candidate.id),
         hidden_field_tag('event_id', event.id),
@@ -49,6 +50,13 @@ module EventsHelper
 			       ).gsub(/'/, "&quot;").gsub(/"/, "'")
 		outcome_form = response_form(candidate, event).gsub(/'/, "&quot;").gsub(/"/, "'")
         activate = active ?  %Q[$('##{id_tag_for(event.date)}').popover('show');] : ""
+        description = ""
+
+        while  (ln = event.description.next_phrase(30)) do
+        	puts "Adding #{ln}"
+        	description = description + ln+"<br/>"
+        end
+        
 		%Q[
 	    	$('##{id_tag_for(event.date)}').popover(
 	    		{ 	html:true,
@@ -56,7 +64,7 @@ module EventsHelper
       			trigger: 'click',
       			title: '#{event.name}',
       			content:  function(){ 
-      				return "<span>#{event.description}</span><br/>#{outcome_form}";
+      				return "<span>#{description}</span><br/>#{outcome_form}";
       			}
 			}
       	);

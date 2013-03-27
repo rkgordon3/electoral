@@ -23,25 +23,37 @@ class Event < ActiveRecord::Base
   belongs_to :trigger_candidate, class_name: "Candidate", foreign_key: :candidate_id
 
   #
-  # Return all outcomes for this event for a candidate. name
-  # may be either a string, a Candidate or an id.
+  # Return all outcomes for this event for a candidate. candidate
+  # may be either a string for candidate name, a Candidate instance or an id.
+  #
+  # If candidate is nil, return all outcomes for this event
   #
   # If response is supplied, results are filtered to that
   # value
   #
-  def outcomes_for(name, response = nil) 
+  def outcomes_for(candidate = nil, response = nil) 
+    puts "event #{self.name} outcomes for #{candidate} for response #{response}"
+    return outcomes if candidate.nil?
     result = nil
-  	case name
+  	case candidate
   	when Candidate
-  		result = outcomes.where(:candidate_id => name.id)
+  		result = outcomes.where(:candidate_id => candidate.id)
   	when Fixnum
-  		result = outcomes.where(:candidate_id => name)
+  		result = outcomes.where(:candidate_id => candidate)
   	else
-  		result = outcomes.where(:candidate_id => Candidate.find_by_name(name))
+  		result = outcomes.where(:candidate_id => Candidate.find_by_name(candidate))
   	end
     result = result || outcomes.where(:name => "candidate")
     result = result.where(:trigger=>response) unless response.nil?
     result
+  end
+
+  def apply_outcomes(candidate = nil, response = nil)
+    # Is there a response-based candidate outcome?
+    current_outcomes = outcomes_for(candidate, response)
+    current_outcomes ||= outcomes
+    puts "****** applying #{outcomes.inspect}"
+    outcomes.map(&:apply)
   end
 
 

@@ -84,12 +84,11 @@ class EventsController < ApplicationController
   def outcome
     logger.info("apply outcomes candidate #{params[:candidate_id]} responds #{params[:button]} for event #{params[:event_id]}")
     @event = Event.find(params[:event_id])
-    @candidate = Candidate.find(params[:candidate_id])
+    # Ignore triggering candidate when applying outcomes unless a policy event
+    @candidate = @event.event_type == 'policy' ? Candidate.find(params[:candidate_id]) : nil 
     # vote_table in response needs @election
     @election = Election.find(@event.election_id) 
-    outcome = @event.outcomes_for(@candidate, 
-                      (params[:button] unless params[:button].blank?)).first
-    outcome.apply
+    @event.apply_outcomes(@candidate, (params[:button] unless params[:button].blank?))
   end
 
   #
