@@ -53,18 +53,18 @@ module EventsHelper
         description = ""
 
         while  (ln = event.description.next_phrase(30)) do
-        	puts "Adding #{ln}"
         	description = description + ln+"<br/>"
         end
+ 
         
 		%Q[
 	    	$('##{id_tag_for(event.date)}').popover(
 	    		{ 	html:true,
       			placement:'bottom',
-      			trigger: 'click',
-      			title: '#{event.name}',
+      			trigger: 'manual',
+      			title: '#{escape_javascript(event.name)}',
       			content:  function(){ 
-      				return "<span>#{description}</span><br/>#{outcome_form}";
+      				return "<span>#{escape_javascript(description)}</span><br/>#{outcome_form}";
       			}
 			}
       	);

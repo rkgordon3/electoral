@@ -8,7 +8,7 @@ end
 describe event "Gore Supports Teachers' Unions" do
   trigger Gore
   date "9/5/2008"
-  description "An interest group "
+  description "An interest group in lobbying against vouchers gives Gore $2M. The Right is outraged."
   Bush outcome 1, [WI, AR, TN]
 end
 
