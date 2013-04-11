@@ -36,7 +36,7 @@ describe Outcome do
 
   	before_votes = @c.votes
 
-  	o.apply_it
+  	o.apply
   	@c.reload
   	@c.votes.should == (before_votes += before_votes * 0.01).to_i
 
@@ -52,7 +52,7 @@ describe Outcome do
 
   	before_votes = @c.votes
 
-  	o.apply_it
+  	o.apply
   	@c.reload
   	@c.votes.should == (before_votes -= before_votes * 0.01).to_i
 

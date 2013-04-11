@@ -53,5 +53,6 @@ describe "Events" do
     assert landing
     event = @election.event_for(bush, landing)
     assert event
+  end
 
 end

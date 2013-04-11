@@ -15,12 +15,12 @@ class Outcome < ActiveRecord::Base
   attr_accessible :trigger, :candidate_id, :delta, :event_id, :candidate, :event
   belongs_to :candidate
   belongs_to :event
+  # an outcome impacts many demographics
   has_many :demographics
 
 
   def apply
-  	demographics.each do |d|
-  		demo = d.type_of.constantize.find(d.value_id)
+  	demographics.each do |demo|
       profile = candidate.profile_for(demo)
   		profile.votes += profile.votes * (delta/100.0)
   		profile.save
