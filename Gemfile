@@ -8,7 +8,7 @@ gem 'cancan'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-# Added comment
+# A changed comment 
 
 group :development, :test do
   gem 'sqlite3', '1.3.5'
