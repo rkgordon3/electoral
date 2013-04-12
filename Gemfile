@@ -9,7 +9,7 @@ gem 'cancan'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 # A changed comment to detect time diff
-# testing since argument
+# This is a user story: 112
 
 group :development, :test do
   gem 'sqlite3', '1.3.5'
