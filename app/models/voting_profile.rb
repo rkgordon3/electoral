@@ -15,7 +15,7 @@ class VotingProfile < ActiveRecord::Base
   belongs_to :state
   belongs_to :candidate
   belongs_to :election
-  attr_accessible :candidate_id, :state_id, :votes, :candidate, :state, :election
+  attr_accessible :candidate_id, :state_id, :votes, :candidate, :state, :election_id
 
   def +(vp)
   	self.votes + vp.votes

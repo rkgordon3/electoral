@@ -38,11 +38,12 @@ class Game < ActiveRecord::Base
     self.player_in_turn = self.election.active_candidates[self.current_turn]
   end
 
-  def setup(an_election)
-    self.election = an_election
+  def setup(an_election = nil)
+    self.election ||= an_election
     an_election.active_candidates.collect { |c| 
-      player_states.build(player_id: c.id, type_of: c.class.to_s)
+      self.player_states.build(player_id: c.id, type_of: c.class.to_s)
     } 
+    self.current_turn = 0
     self.max_position = an_election.campaign_length
     self.player_in_turn = self.election.active_candidates[0]
   end

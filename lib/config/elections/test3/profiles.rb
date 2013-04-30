@@ -4,11 +4,11 @@ class Profiles
 	extend States
 
 	#
-	# Define profiles for election 
-	# election : an election object
+	# Define profiles for election.id 
+	# election.id : an election.id object
 	# candidates : an array of candidate objects
 	#
-	def self.populate(election, candidates)
+def self.populate(election, candidates)
 
       VotingProfile.delete_all(["election_id = ?", election.id])
 
@@ -27,104 +27,134 @@ CSV.open("lib/config/elections/us-electoral.csv").each do |ln|
   
   candidates.each_value do |c| 
   	VotingProfile.create!(:candidate=> c,
-  						  :election => election ,
+  						  :election_id => election.id ,
   		                  :state=> s, 
   		                  :votes => arbitrary_vote_assignments[i % 3])
     i += 1
   end unless swing_states.include?(s.abbrev)
 end
-
+puts "------------creating AZ with @{election.id}"
 VotingProfile.create!(:candidate=>candidates["Gore"], 
 	                  :state=>State.find_by_abbrev("AZ"), 
-	                  :votes=>250000)
-VotingProfile.create!(:candidate=>candidates["Gore"], 
+	                  :votes=>250000,
+	                  :election_id => election.id) 
+VotingProfile.create!(:candidate=>candidates["Gore"],
 	                  :state=>State.find_by_abbrev("AR"), 
-	                  :votes=>418000)
+	                  :votes=>418000,
+	                  :election_id => election.id)
 VotingProfile.create!(:candidate=>candidates["Gore"], 
 	                  :state=>State.find_by_abbrev("FL"), 
-	                  :votes=>2900000)
+	                  :votes=>2900000,
+	                  :election_id => election.id)
 VotingProfile.create!(:candidate=>candidates["Gore"], 
 	                  :state=>State.find_by_abbrev("IA"), 
-	                  :votes=>633000)
+	                  :votes=>633000,
+	                  :election_id => election.id)
 VotingProfile.create!(:candidate=>candidates["Gore"], 
 	                  :state=>State.find_by_abbrev("MI"), 
-	                  :votes=>2153000)
+	                  :votes=>2153000,
+	                  :election_id => election.id)
 VotingProfile.create!(:candidate=>candidates["Gore"], 
 	                  :state=>State.find_by_abbrev("MO"), 
-	                  :votes=>1110000)
+	                  :votes=>1110000,
+	                  :election_id => election.id)
 VotingProfile.create!(:candidate=>candidates["Gore"], 
 	                  :state=>State.find_by_abbrev("NV"), 
-	                  :votes=>299000)
+	                  :votes=>299000,
+	                  :election_id => election.id)
 VotingProfile.create!(:candidate=>candidates["Gore"], 
 	                  :state=>State.find_by_abbrev("NH"), 
-	                  :votes=>245000)
+	                  :votes=>245000,
+	                  :election_id => election.id)
 VotingProfile.create!(:candidate=>candidates["Gore"], 
 	                  :state=>State.find_by_abbrev("NM"), 
-	                  :votes=>267000)
+	                  :votes=>267000,
+	                  :election_id => election.id)
 VotingProfile.create!(:candidate=>candidates["Gore"], 
 	                  :state=>State.find_by_abbrev("OR"), 
-	                  :votes=>695000)
+	                  :votes=>695000,
+	                  :election_id => election.id)
 VotingProfile.create!(:candidate=>candidates["Gore"], 
 	                  :state=>State.find_by_abbrev("PA"), 
-	                  :votes=>2460000)
+	                  :votes=>2460000,
+	                  :election_id => election.id)
 VotingProfile.create!(:candidate=>candidates["Gore"], 
 	                  :state=>State.find_by_abbrev("TN"), 
-	                  :votes=>980000)
+	                   :votes=>980000,
+	                  :election_id => election.id)
 VotingProfile.create!(:candidate=>candidates["Gore"], 
 	                  :state=>State.find_by_abbrev("UT"), 
-	                  :votes=>200000)
+	                  :votes=>200000,
+	                  :election_id => election.id)
 VotingProfile.create!(:candidate=>candidates["Gore"], 
 	                  :state=>State.find_by_abbrev("WV"), 
-	                  :votes=>291000)
+	                  :votes=>291000,
+	                  :election_id => election.id)
 VotingProfile.create!(:candidate=>candidates["Gore"], 
 	                  :state=>State.find_by_abbrev("WI"), 
-	                  :votes=>1240000)
+	                  :votes=>1240000,
+	                  :election_id => election.id)
 ####
 VotingProfile.create!(:candidate=>candidates["Bush"], 
 	                  :state=>State.find_by_abbrev("AR"), 
-	                  :votes=>470000)
+	                  :votes=>470000,
+	                  :election_id => election.id)
 VotingProfile.create!(:candidate=>candidates["Bush"], 
 	                  :state=>State.find_by_abbrev("AZ"), 
-	                  :votes=>300000)
+	                  :votes=>300000,
+	                  :election_id => election.id)
 VotingProfile.create!(:candidate=>candidates["Bush"], 
 	                  :state=>State.find_by_abbrev("FL"), 
-	                  :votes=>2900000)
+	                  :votes=>2900000,
+	                  :election_id => election.id)
 VotingProfile.create!(:candidate=>candidates["Bush"], 
 	                  :state=>State.find_by_abbrev("IA"), 
-	                  :votes=>628000)
+	                  :votes=>628000,
+	                  :election_id => election.id)
 VotingProfile.create!(:candidate=>candidates["Bush"], 
 	                  :state=>State.find_by_abbrev("MI"), 
-	                  :votes=>1945000)
+	                  :votes=>1945000,
+	                  :election_id => election.id)
 VotingProfile.create!(:candidate=>candidates["Bush"], 
 	                  :state=>State.find_by_abbrev("MO"), 
-	                  :votes=>1190000)
+	                  :votes=>1190000,
+	                  :election_id => election.id)
 VotingProfile.create!(:candidate=>candidates["Bush"], 
 	                  :state=>State.find_by_abbrev("NV"), 
-	                  :votes=>301000)
+	                  :votes=>301000,
+	                  :election_id => election.id)
 VotingProfile.create!(:candidate=>candidates["Bush"], 
 	                  :state=>State.find_by_abbrev("NH"), 
-	                  :votes=>273000)
+	                  :votes=>273000,
+	                  :election_id => election.id)
 VotingProfile.create!(:candidate=>candidates["Bush"], 
 	                  :state=>State.find_by_abbrev("NM"), 
-	                  :votes=>259000)
+	                  :votes=>259000,
+	                  :election_id => election.id)
 VotingProfile.create!(:candidate=>candidates["Bush"], 
 	                  :state=>State.find_by_abbrev("OR"), 
-	                  :votes=>691000)
+	                  :votes=>691000,
+	                  :election_id => election.id)
 VotingProfile.create!(:candidate=>candidates["Bush"], 
 	                  :state=>State.find_by_abbrev("PA"), 
-	                  :votes=>2260000)
+	                  :votes=>2260000,
+	                  :election_id => election.id)
 VotingProfile.create!(:candidate=>candidates["Bush"], 
 	                  :state=>State.find_by_abbrev("TN"), 
-	                  :votes=>1060000)
+	                  :votes=>1060000,
+	                  :election_id => election.id)
 VotingProfile.create!(:candidate=>candidates["Bush"], 
 	                  :state=>State.find_by_abbrev("UT"), 
-	                  :votes=>300000)
+	                  :votes=>300000,
+	                  :election_id => election.id)
 VotingProfile.create!(:candidate=>candidates["Bush"], 
 	                  :state=>State.find_by_abbrev("WV"), 
-	                  :votes=>332000)
+	                  :votes=>332000,
+	                  :election_id => election.id)
 VotingProfile.create!(:candidate=>candidates["Bush"], 
 	                  :state=>State.find_by_abbrev("WI"), 
-	                  :votes=>1234000)
+	                  :votes=>1234000,
+	                  :election_id => election.id)
 
 end
 

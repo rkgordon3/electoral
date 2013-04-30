@@ -1,7 +1,6 @@
 require 'root.rb'
 require 'events.rb'
 require "#{Root::Election}/candidates.rb"
-require "#{Root::Election}/profiles"
 require 'states.rb'
 require 'election_configuration.rb'
 
@@ -21,6 +20,7 @@ def initialize(name, date)
   @name = name
   @events = []
   @event_map = {}
+  instance_eval "require 'config/elections/#{name}/profiles.rb'"
   instance_eval File.open("./lib/config/elections/#{name}/campaign_events.rb").readlines.join(";")
 end
 

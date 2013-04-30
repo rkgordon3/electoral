@@ -18,14 +18,18 @@ class GamesController < ApplicationController
   def show
     @game = Game.find(params[:id])
     @election = @game.election
-    @game.player_in_turn = @election.active_candidates[1]
+    @game.setup(@election)
+    
     respond_with(@game)
   end
 
   # GET /games/new
   # GET /games/new.json
   def new
+    ActiveRecord::Base.connection.clear_cache!
+    ActiveRecord::Base.connection.reconnect!
     @game = Game.new
+    
     d = Dir.new("./lib/config/elections")
     @config_dirs =  d.each.select { |f| File.directory?(File.join(d.path,f)) && f =~ /\w+/ }
     respond_to do |format|
@@ -106,9 +110,7 @@ class GamesController < ApplicationController
   def reset
     expire_action :action => :show
     @game = Game.find(params[:id])
-    @game.current_turn = 0
-    @game.player_states.each {|p| p.location = 0 }
-    @game.player_in_turn = @game.election.active_candidates[0]
+    @game.setup
     @game.save
     redirect_to game_path(@game)
   end

@@ -7,11 +7,9 @@ module GamesHelper
 	end
 	def json_voting_profiles(game)
 		profiles = {}
-		State.all.each  do  |s| 
-			profiles[s.state_tag] = []
-			s.voting_profiles.sort.reverse.each do  |vp| 
-				profiles[s.state_tag] << { :name => vp.candidate.name, :votes => vp.votes }
-			end
+		VotingProfile.where("election_id = ?", game.election_id).each do  |vp| 
+			profiles[vp.state.state_tag] = [] if profiles[vp.state.state_tag].nil?
+			profiles[vp.state.state_tag] << { :name => vp.candidate.name, :votes => vp.votes }
 		end
 		profiles.to_json.html_safe
 	end
