@@ -39,13 +39,16 @@ class Game < ActiveRecord::Base
   end
 
   def setup(an_election = nil)
-    self.election ||= an_election
-    an_election.active_candidates.collect { |c| 
+    election = self.election ||= an_election
+    player_states.delete_all
+    election.active_candidates.collect { |c| 
       self.player_states.build(player_id: c.id, type_of: c.class.to_s)
     } 
     self.current_turn = 0
-    self.max_position = an_election.campaign_length
-    self.player_in_turn = self.election.active_candidates[0]
+    self.max_position = election.campaign_length
+    self.player_in_turn = election.active_candidates[0]
+    self.election = election
+    self.save
   end
 
   def over?

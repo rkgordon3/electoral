@@ -30,4 +30,12 @@
   </div>
 <% end %>
 </div>
+
+
 </div>
+<% if Rails.env.development? %>
+<div class="debug-panel">
+  <%= debug (@game.inspect) %>
+  <%= debug (Game.all.inspect) %>
+  </div>
+<% end %>

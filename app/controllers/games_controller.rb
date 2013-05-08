@@ -26,8 +26,9 @@ class GamesController < ApplicationController
   # GET /games/new
   # GET /games/new.json
   def new
-    ActiveRecord::Base.connection.clear_cache!
+  
     ActiveRecord::Base.connection.reconnect!
+
     @game = Game.new
     
     d = Dir.new("./lib/config/elections")
@@ -110,8 +111,9 @@ class GamesController < ApplicationController
   def reset
     expire_action :action => :show
     @game = Game.find(params[:id])
+    logger.debug("**********   #{@game}  #{@game.inspect}")
     @game.setup
-    @game.save
+ 
     redirect_to game_path(@game)
   end
 

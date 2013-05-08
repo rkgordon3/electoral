@@ -64,7 +64,7 @@ module EventsHelper
       			trigger: 'manual',
       			title: '#{escape_javascript(event.name)}',
       			content:  function(){ 
-      				return "<span>#{escape_javascript(description)}</span><br/>#{outcome_form}";
+      				return "<div style='text-align:left'>#{escape_javascript(description)}</div><br/>#{outcome_form}";
       			}
 			}
       	);

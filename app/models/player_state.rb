@@ -12,5 +12,7 @@
 #
 
 class PlayerState < ActiveRecord::Base
+
   attr_accessible :game_id, :location, :player_id, :type_of
+
 end
