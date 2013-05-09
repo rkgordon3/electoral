@@ -4,24 +4,27 @@ module ApplicationHelper
 		param_hash = options.reverse_merge({ :controller => "games", :action => "roll" })
 		out = ""
 
-		out += javascript_tag (%Q[function update_die(id, val) {
+		out += javascript_tag (%Q[
+			function update_die(id, val) {
 			  $(id).html("<img src='/assets/die"+val+".gif' alt='" + val +"' >");
 			}
 			function update_player(id, val) {
 				$(id).html("<img src='/assets/"+val.toLowerCase()+".jpeg' width='64' height='64' alt='" + val +"' >");
 			}
 			function roll(elem) {
-			val0 = Math.floor((Math.random()*6)+1);
-			update_die("#die0_label", val0)
-  			val1 = Math.floor((Math.random()*6)+1);
-  			update_die("#die1_label",val1);
-  			$.post("/#{param_hash[:controller]}/#{game.id}/#{param_hash[:action]}", 
+				val0 = Math.floor((Math.random()*6)+1);
+				update_die("#die0_label", val0)
+  				val1 = Math.floor((Math.random()*6)+1);
+  				update_die("#die1_label",val1);
+  				$.post("/#{param_hash[:controller]}/#{game.id}/#{param_hash[:action]}", 
   				       { 'die[]' : [val0, val1] }, 
   				       function(data) { 
                   			update_player('#player_in_turn', data.player_in_turn);
-                  			handle_move(data); }, 
+                  			handle_move(data); 
+                  		}, 
                   		"json");
-		};])
+			};
+		])
         player_img = image_tag("#{game.player_in_turn.name}.jpeg".downcase, :size=>"64x64")
         # This code purely for initialization. Javascript above takes care 
         # of subsequent rolls
