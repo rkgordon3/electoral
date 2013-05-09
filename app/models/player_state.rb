@@ -11,6 +11,8 @@
 #  type_of    :string(255)
 #
 
+# Represent a players positon within a given game.
+
 class PlayerState < ActiveRecord::Base
 
   attr_accessible :game_id, :location, :player_id, :type_of
